@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PregnaCare(Patients)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+  <link rel="stylesheet" href="Patients.css">
+  <link rel="icon" href="icons/love 1.png" />
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">
+      <div class="gradient-logo">
+        <img src="icons/mother.png" alt="PregnaCare Logo" />
+      </div>
+      <h2><span class="heart">Pregna</span><span class="care">Care</span></h2>
+      <p class="role">Maternity Clinic Admin</p>
+    </div>
+
+    <ul class="nav">
+      <li>
+        <a href="Dashboard.html">
+          <i class="fa-solid fa-chart-column"></i>
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="Patients.html" class="active">
+          <i class="fa-solid fa-circle-user"></i>
+          Patients
+        </a>
+      </li>
+      <li>
+        <a href="Appointments.html">
+          <i class="fa-solid fa-calendar-days"></i>
+          Appointments
+        </a>
+      </li>
+      <li>
+        <a href="Lab Results.html">
+          <i class="fa-solid fa-flask"></i>
+          Lab Results
+        </a>
+      </li>
+      <li>
+        <a href="Prescriptions.html">
+          <i class="fa-solid fa-pills"></i>
+          Prescriptions
+        </a>
+      </li>
+      <li>
+        <a href="Reports.html">
+          <i class="fa-solid fa-chart-bar"></i>
+          Reports
+        </a>
+      </li>
+    </ul>
+
+    <!-- User Profile Section -->
+    <div class="user">
+      <div class="circle">US</div>
+      <div>
+        <p>Loading...</p>
+        <span>Admin</span>
+      </div>
+    </div>
+
+    <!-- Dropdown Menu - Only Logout -->
+    <div class="dropdown-menu">
+      <a href="#" class="logout" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- Enhanced search header with auto-hide functionality -->
+    <div class="search-header" id="topbar">
+      <div class="search">
+        <input type="text" id="searchInput" placeholder="Search patients by name, ID, or email..." />
+        <div class="icons">
+          <i class="fa-solid fa-bell" id="notifIcon">
+            <span class="notification-badge" id="notificationBadge">0</span>
+          </i>
+          <i class="fa-solid fa-circle-question" id="helpIcon"></i>
+        </div>
+
+        <!-- Notification Dropdown -->
+        <div class="dropdown" id="notifDropdown">
+          <div class="notif-header">
+            <p><strong>Notifications</strong></p>
+            <button onclick="markAllNotificationsRead()" class="mark-all-read-btn">
+              <i class="fas fa-check-double"></i>Mark all read
+            </button>
+          </div>
+        </div>
+
+        <!-- Help Dropdown -->
+        <div class="dropdown" id="helpDropdown">
+          <p><strong>Help & Support</strong></p>
+          <ul>
+            <li><i class="fas fa-phone"></i> Emergency: +63 917 123 4567</li>
+            <li><i class="fas fa-envelope"></i> support@pregnacare.com</li>
+            <li><i class="fas fa-book"></i> User Manual</li>
+            <li><i class="fas fa-video"></i> Video Tutorials</li>
+            <li><i class="fas fa-comments"></i> Live Chat Support</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <div class="patients-header">
+        <div class="patients-info">
+          <h2>Patients</h2>
+          <p>Manage and monitor all patients in the clinic</p>
+        </div>
+        <div class="header-buttons">
+          <button class="filter-btn gynecology-btn" onclick="filterPatientsByType('Gynecology')">
+            <i class="fas fa-female"></i>
+            Gynecology
+          </button>
+          <button class="filter-btn prenatal-btn" onclick="filterPatientsByType('Prenatal')">
+            <i class="fas fa-baby"></i>
+            Prenatal
+          </button>
+          <button class="history-btn" onclick="openPatientHistory()">
+            <i class="fas fa-history"></i>
+            History
+          </button>
+          <button class="add-btn" onclick="openModal()">
+            <i class="fas fa-plus"></i>
+            Add Patient
+          </button>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Patient ID</th>
+              <th>Full Name</th>
+              <th>Age</th>
+              <th>Status</th>
+              <th class="actions-header">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="patientTableBody">
+            <tr>
+              <td colspan="5" style="text-align: center; padding: 40px;">
+                <i class="fas fa-spinner fa-spin" style="font-size: 24px; color: var(--heart-red);"></i>
+                <p style="margin-top: 10px; color: #666;">Authenticating...</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Patient Modal -->
+  <div class="modal" id="patientModal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <h2>
+        <i class="fas fa-user-plus"></i>
+        Add New Patient
+      </h2>
+      <form id="patientForm">
+        <input type="email" id="email" placeholder="Enter Email Address" required />
+        <input type="text" id="lastName" placeholder="Last Name" required />
+        <input type="text" id="firstName" placeholder="First Name" required />
+        <input type="text" id="middleName" placeholder="Middle Name (Optional)" />
+        <input type="text" id="address" placeholder="Address" required />
+        <label for="birthdate" class="floating-label"><small class="birthdate">Birthdate</small></label>
+        <input type="date" id="birthdate" class="floating-input" required>
+        <small id="ageDisplay" style="color: #666; margin-bottom: 5px; margin-top: -5px; display: block;"></small>
+        <label for="patientType" class="floating-label"><small>Patient Type</small></label>
+        <select id="patientType" required>
+          <option value="">Select Patient Type</option>
+          <option value="Gynecology">Gynecology</option>
+          <option value="Prenatal">Prenatal</option>
+        </select>
+        <label for="status" class="floating-label"><small>Status</small></label>
+        <select id="status" required>
+          <option value="">Select Status</option>
+          <option value="Ongoing">Ongoing</option>
+          <option value="Completed">Completed</option>
+        </select>
+        <button type="submit" id="saveBtn">
+          <i class="fas fa-save"></i>
+          Save Patient
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Enhanced Patient History Modal -->
+  <div class="modal" id="patientHistoryModal">
+    <div class="modal-content history-modal-content">
+      <span class="close" onclick="closePatientHistory()">&times;</span>
+      <h2>
+        <i class="fas fa-history"></i>
+        Patient History
+      </h2>
+      <div id="historyContent">
+        <!-- History will be dynamically loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Patient Details Modal (for editing) -->
+  <div class="modal" id="patientDetailsModal" style="display: none;">
+    <div class="modal-content">
+      <!-- Content will be dynamically inserted here -->
+    </div>
+  </div>
+
+  <!-- Authentication Required Modal -->
+  <div class="modal" id="authRequiredModal" style="display: none;">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+      <h2 style="color: var(--heart-red); margin-bottom: 20px;">
+        <i class="fas fa-lock"></i> Authentication Required
+      </h2>
+      <p style="margin-bottom: 20px;">You need to be logged in to access this page.</p>
+      <button onclick="window.location.href='Admin login.html'" style="background: linear-gradient(135deg, var(--heart-red), var(--deep-red)); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+        <i class="fas fa-sign-in-alt"></i> Go to Login
+      </button>
+    </div>
+  </div>
+
+  <!-- Patient Profile Modal - Styled like Patient Record -->
+  <div class="modal" id="patientProfileModal" style="display: none;">
+    <div class="modal-content patient-profile-modal">
+      <span class="close" onclick="closePatientProfile()">&times;</span>
+      <div id="patientProfileContainer"></div>
+    </div>
+  </div>
+
+  <!-- Patient Record Modal -->
+  <div class="modal" id="patientRecordModal" style="display: none;">
+    <div class="modal-content" style="max-width: 98%; width: 98%; padding: 0; max-height: 95vh; overflow-y: auto;">
+      <div id="patientRecordContainer"></div>
+    </div>
+  </div>
+
+  <!-- Firebase Integration -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  
+  <!-- React and ReactDOM for Patient Profile -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  
+  <script src="Patients.js"></script>
+</body>
+</html>

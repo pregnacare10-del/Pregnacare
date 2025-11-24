@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PregnaCare(Messages)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="icon" href="icons/love 1.png">
+  <link rel="stylesheet" href="Messages.css">
+</head>
+<body>
+
+  <!-- Main Content -->
+  <div class="main">
+    <div class="messages-container">
+      <!-- Messages Header -->
+      <div class="messages-header">
+        <h1>
+          <i class="fas fa-comments"></i>
+          Messages
+          <span id="unreadCount" class="unread-counter" style="display: none;">0</span>
+        </h1>
+        <div class="header-actions">
+          <button class="btn btn-secondary" onclick="goToDashboard()" title="Back to Dashboard">
+            <i class="fas fa-arrow-left"></i> 
+            <span>Dashboard</span>
+          </button>
+          <button class="btn btn-secondary" id="refreshMessages" title="Refresh Messages">
+            <i class="fas fa-sync"></i> 
+            <span>Refresh</span>
+          </button>
+          <button class="btn btn-primary" id="newMessageBtn" title="New Message">
+            <i class="fas fa-plus"></i> 
+            <span>New Message</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Messages Content -->
+      <div class="messages-content">
+        <!-- Conversations Sidebar -->
+        <div class="conversations-sidebar">
+          <div class="conversations-header">
+            <div class="search-box">
+              <input type="text" id="searchConversations" placeholder="Search conversations..." autocomplete="off">
+              <i class="fas fa-search"></i>
+            </div>
+            
+            <div class="filter-tabs">
+              <button class="filter-tab active" data-filter="all">All</button>
+              <button class="filter-tab" data-filter="unread">Unread</button>
+              <button class="filter-tab" data-filter="patients">Patients</button>
+              <button class="filter-tab" data-filter="doctors">Doctors</button>
+            </div>
+          </div>
+          
+          <div class="conversations-list" id="conversationsList">
+            <div class="loading-conversations">
+              <i class="fas fa-spinner fa-spin"></i>
+              <p>Loading conversations...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-area" id="chatArea">
+          <div class="no-conversation">
+            <i class="fas fa-comments"></i>
+            <h3>Welcome to PregnaCare Messages</h3>
+            <p>Select a conversation to start messaging or create a new conversation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Message Modal -->
+  <div id="newMessageModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-envelope"></i> New Message</h2>
+        <button class="close" id="closeModal">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <form id="newMessageForm">
+          <div class="form-group">
+            <label for="recipientInput">Recipient:</label>
+            <!-- SEARCHABLE RECIPIENT DROPDOWN -->
+            <div class="recipient-field-wrapper">
+              <div class="searchable-select">
+                <input 
+                  type="text" 
+                  id="recipientInput" 
+                  name="recipientInput"
+                  placeholder="Type to search for a patient or user..." 
+                  autocomplete="off"
+                  required
+                />
+                <i class="fas fa-search search-icon"></i>
+                <div class="recipient-dropdown" id="recipientDropdownList">
+                  <div class="dropdown-item no-results">Start typing to search...</div>
+                </div>
+              </div>
+            </div>
+            <small class="form-text">Search and select from available users and patients</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="messageSubject">Subject:</label>
+            <input type="text" id="messageSubject" class="form-control" 
+                   placeholder="Enter message subject" required maxlength="100">
+          </div>
+          
+          <div class="form-group">
+            <label for="messageContent">Message:</label>
+            <textarea id="messageContent" class="form-control" rows="4" 
+                      placeholder="Type your message here..." required maxlength="1000"></textarea>
+            <small class="form-text" id="charCount">0/1000 characters</small>
+          </div>
+
+          <!-- File Attachment Section -->
+          <div class="form-group">
+            <label>Attachments (Optional):</label>
+            <div class="file-upload-area">
+              <input type="file" id="fileInput" multiple accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,.rar" style="display: none;">
+              <button type="button" class="btn-upload" onclick="document.getElementById('fileInput').click()">
+                <i class="fas fa-paperclip"></i> Attach Files
+              </button>
+              <small class="form-text">Max 5MB per file. Supports images, documents (PDF, Word, Excel, PowerPoint), text files, and archives.</small>
+            </div>
+            <div id="filePreviewContainer" class="file-preview-container"></div>
+          </div>
+          
+          <div class="modal-actions">
+            <button type="button" id="cancelMessage" class="btn btn-secondary">
+              <i class="fas fa-times"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Connection Status Indicator -->
+  <div class="connection-status">
+    <button class="connection-indicator" id="connectionIndicator">
+      <i class="fas fa-circle"></i>
+      <span>Connected</span>
+    </button>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  
+  <script src="Messages.js"></script>
+</body>
+</html>

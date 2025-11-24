@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PregnaCare(Reports)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="Reports.css" />
+  <link rel="icon" href="icons/love 1.png">
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo">
+      <div class="gradient-logo">
+        <img src="icons/mother.png" alt="PregnaCare Logo" />
+      </div>
+      <h2><span class="heart">Pregna</span><span class="care">Care</span></h2>
+      <p class="role">Maternity Clinic Admin</p>
+    </div>
+
+    <ul class="nav">
+      <li>
+        <a href="Dashboard.html">
+          <i class="fa-solid fa-chart-column"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="Patients.html">
+          <i class="fa-solid fa-circle-user"></i>
+          <span>Patients</span>
+        </a>
+      </li>
+      <li>
+        <a href="Appointments.html">
+          <i class="fa-solid fa-calendar-days"></i>
+          <span>Appointments</span>
+        </a>
+      </li>
+      <li>
+        <a href="Lab Results.html">
+          <i class="fa-solid fa-flask"></i>
+          <span>Lab Results</span>
+        </a>
+      </li>
+      <li>
+        <a href="Prescriptions.html">
+          <i class="fa-solid fa-pills"></i>
+          <span>Prescriptions</span>
+        </a>
+      </li>
+      <li>
+        <a href="Reports.html" class="active">
+          <i class="fa-solid fa-chart-bar"></i>
+          <span>Reports</span>
+        </a>
+      </li>
+    </ul>
+
+    <div class="user">
+      <div class="circle">US</div>
+      <div>
+        <p>Loading...</p>
+        <span>Admin</span>
+      </div>
+    </div>
+
+    <div class="dropdown-menu">
+      <a href="#" class="logout" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="search-header">
+      <div class="search">
+        <input type="text" id="searchInput" placeholder="Search reports by name, type, or tags..." />
+        <div class="icons">
+          <i class="fa-solid fa-bell" id="notifIcon">
+            <span class="notification-badge" id="notifBadge">0</span>
+          </i>
+          <i class="fa-solid fa-circle-question" id="helpIcon"></i>
+        </div>
+
+        <div class="dropdown" id="notifDropdown">
+          <p><strong>Notifications</strong></p>
+          <ul id="notificationsList">
+            <li>No new notifications</li>
+          </ul>
+        </div>
+
+        <div class="dropdown" id="helpDropdown">
+          <p><strong>Help & Support</strong></p>
+          <ul>
+            <li><i class="fas fa-phone"></i> Emergency: +63 917 123 4567</li>
+            <li><i class="fas fa-envelope"></i> support@pregnacare.com</li>
+            <li><i class="fas fa-book"></i> User Manual</li>
+            <li><i class="fas fa-video"></i> Video Tutorials</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="reports-header">
+      <div class="reports-title">
+        <h1>Reports Management</h1>
+        <p>Generate, analyze, and manage comprehensive clinic reports</p>
+      </div>
+      <div class="action-buttons">
+        <button class="btn btn-primary" id="generateReportBtn">
+          <i class="fa-solid fa-plus"></i>
+          Generate New Report
+        </button>
+      </div>
+    </div>
+
+    <div class="quick-reports-section">
+      <h3><i class="fas fa-bolt"></i> Quick Generate</h3>
+      <div class="quick-reports-grid">
+        <div class="quick-report-card" data-report-type="patient-summary">
+          <div class="quick-report-icon">
+            <i class="fa-solid fa-users"></i>
+          </div>
+          <div class="quick-report-info">
+            <h4>Patient Summary</h4>
+            <p>Complete patient records and analytics</p>
+          </div>
+        </div>
+        
+        <div class="quick-report-card" data-report-type="appointments-daily">
+          <div class="quick-report-icon">
+            <i class="fa-solid fa-calendar-day"></i>
+          </div>
+          <div class="quick-report-info">
+            <h4>Daily Appointments</h4>
+            <p>Today's appointment schedule</p>
+          </div>
+        </div>
+        
+        <div class="quick-report-card" data-report-type="lab-results">
+          <div class="quick-report-icon">
+            <i class="fa-solid fa-flask"></i>
+          </div>
+          <div class="quick-report-info">
+            <h4>Lab Results</h4>
+            <p>Recent lab results summary</p>
+          </div>
+        </div>
+        
+        <div class="quick-report-card" data-report-type="medications-active">
+          <div class="quick-report-icon">
+            <i class="fa-solid fa-pills"></i>
+          </div>
+          <div class="quick-report-info">
+            <h4>Active Medications</h4>
+            <p>Currently prescribed medications</p>
+          </div>
+        </div>
+        
+        <div class="quick-report-card" data-report-type="monthly-summary">
+          <div class="quick-report-icon">
+            <i class="fa-solid fa-chart-bar"></i>
+          </div>
+          <div class="quick-report-info">
+            <h4>Monthly Summary</h4>
+            <p>Comprehensive monthly analytics</p>
+          </div>
+        </div>
+        
+        <div class="quick-report-card" data-report-type="financial-summary">
+          <div class="quick-report-icon">
+            <i class="fa-solid fa-dollar-sign"></i>
+          </div>
+          <div class="quick-report-info">
+            <h4>Financial Summary</h4>
+            <p>Revenue and financial performance</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reports-list-section">
+      <div class="section-header">
+        <h3><i class="fas fa-list"></i> Generated Reports</h3>
+        <div class="filter-controls">
+          <select id="filterType">
+            <option value="all">All Types</option>
+            <option value="patient-summary">Patient Summary</option>
+            <option value="appointments-daily">Daily Appointments</option>
+            <option value="lab-results">Lab Results</option>
+            <option value="medications-active">Active Medications</option>
+            <option value="monthly-summary">Monthly Summary</option>
+            <option value="financial-summary">Financial Summary</option>
+          </select>
+          <select id="filterDate">
+            <option value="all">All Time</option>
+            <option value="today">Today</option>
+            <option value="week">This Week</option>
+            <option value="month">This Month</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="reports-table-container">
+        <table class="reports-table" id="reportsTable">
+          <thead>
+            <tr>
+              <th>Report Name</th>
+              <th>Generated Date</th>
+              <th>Type</th>
+              <th>Format</th>
+              <th>Size</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="6" style="text-align: center; padding: 40px;">
+                <i class="fas fa-inbox" style="font-size: 48px; color: #ddd;"></i>
+                <p style="margin-top: 15px; color: #999;">No reports generated yet. Click "Generate New Report" to create your first report.</p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Generate Report Modal -->
+  <div id="generateReportModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Generate New Report</h2>
+        <span class="close">&times;</span>
+      </div>
+      <form id="generateReportForm">
+        <div class="form-group">
+          <label for="reportName">Report Name</label>
+          <input type="text" id="reportName" name="reportName" placeholder="Enter report name">
+        </div>
+
+        <div class="form-group">
+          <label for="reportType">Report Type</label>
+          <select id="reportType" name="reportType" required>
+            <option value="">Select report type...</option>
+            <option value="patient-summary">Patient Summary Report</option>
+            <option value="appointments-daily">Daily Appointments Report</option>
+            <option value="lab-results">Lab Results Report</option>
+            <option value="medications-active">Active Medications Report</option>
+            <option value="monthly-summary">Monthly Summary Report</option>
+            <option value="financial-summary">Financial Summary Report</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="reportDescription">Description (Optional)</label>
+          <textarea id="reportDescription" name="description" rows="3" placeholder="Enter report description..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" name="startDate">
+          </div>
+          <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" name="endDate">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Include Sections</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="includePatients" checked>
+              <span>Patient Information</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="includeAppointments" checked>
+              <span>Appointments</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="includeLabs" checked>
+              <span>Lab Results</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="includeMedications" checked>
+              <span>Medications</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Export Format</label>
+          <div class="radio-group">
+            <label class="radio-item">
+              <input type="radio" name="exportFormat" value="pdf" checked>
+              <span>PDF Document</span>
+            </label>
+            <label class="radio-item">
+              <input type="radio" name="exportFormat" value="excel">
+              <span>Excel Spreadsheet</span>
+            </label>
+            <label class="radio-item">
+              <input type="radio" name="exportFormat" value="csv">
+              <span>CSV Data</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary btn-cancel-generate">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary" id="generateSubmitBtn">
+            <i class="fas fa-cog"></i> Generate Report
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Report Details Modal -->
+  <div id="reportDetailsModal" class="modal">
+    <div class="modal-content large">
+      <div class="modal-header">
+        <h2 id="reportDetailsTitle">Report Details</h2>
+        <span class="close">&times;</span>
+      </div>
+      <div id="reportDetailsContent"></div>
+    </div>
+  </div>
+
+  <!-- Report Generation Progress Modal -->
+  <div id="generationProgressModal" class="modal">
+    <div class="modal-content small">
+      <div class="progress-content">
+        <div class="progress-icon">
+          <i class="fas fa-cog fa-spin"></i>
+        </div>
+        <h3>Generating Report</h3>
+        <p id="progressMessage">Initializing report generation...</p>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-percentage" id="progressPercentage">0%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share Report Modal -->
+  <div id="shareReportModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Share Report</h2>
+        <span class="close">&times;</span>
+      </div>
+      <div class="share-content">
+        <div class="form-group">
+          <label for="shareEmails">Email Addresses (comma separated)</label>
+          <textarea id="shareEmails" rows="3" placeholder="Enter email addresses..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="shareMessage">Message (Optional)</label>
+          <textarea id="shareMessage" rows="3" placeholder="Add a message..."></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary btn-cancel-share">
+            Cancel
+          </button>
+          <button type="button" class="btn btn-primary" id="sendSharedReportBtn">
+            <i class="fas fa-share"></i> Share Report
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Authentication Required Modal -->
+  <div class="modal" id="authRequiredModal">
+    <div class="modal-content modal-content-auth">
+      <h2>
+        <i class="fas fa-lock"></i> Authentication Required
+      </h2>
+      <p>You need to be logged in to access this page.</p>
+      <button id="goToLoginBtn" class="btn btn-primary">
+        <i class="fas fa-sign-in-alt"></i> Go to Login
+      </button>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="Reports.js"></script>
+</body>
+</html>

@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PregnaCare(Prescriptions)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="Prescriptions.css">
+  <link rel="icon" href="icons/love 1.png">
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="logo">
+      <div class="gradient-logo">
+        <img src="icons/mother.png" alt="PregnaCare Logo" />
+      </div>
+      <h2><span class="heart">Pregna</span><span class="care">Care</span></h2>
+      <p class="role">Maternity Clinic Admin</p>
+    </div>
+    <ul class="nav">
+      <li><a href="DashBoard.html"><i class="fa-solid fa-chart-column"></i>Dashboard</a></li>
+      <li><a href="Patients.html"><i class="fa-solid fa-circle-user"></i>Patients</a></li>
+      <li><a href="Appointments.html"><i class="fa-solid fa-calendar-days"></i>Appointments</a></li>
+      <li><a href="Lab Results.html"><i class="fa-solid fa-flask"></i>Lab Results</a></li>
+      <li><a href="Prescriptions.html" class="active"><i class="fa-solid fa-pills"></i>Prescriptions</a></li>
+      <li><a href="Reports.html"><i class="fa-solid fa-chart-bar"></i>Reports</a></li>
+    </ul>
+
+    <!-- User Profile Section -->
+    <div class="user">
+      <div class="circle">US</div>
+      <div>
+        <p>Loading...</p>
+        <span>Admin</span>
+      </div>
+    </div>
+
+    <!-- Dropdown Menu - Only Logout -->
+    <div class="dropdown-menu">
+      <a href="#" class="logout" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    <!-- Search Header -->
+    <div class="search-header">
+      <div class="search">
+        <input type="text" id="searchInput" placeholder="Search patients, medications, doctors..." />
+        <div class="icons">
+          <span class="icon-dropdown-group">
+          </span>
+          <span class="icon-dropdown-group">
+            <button type="button" class="icon-btn" id="notifIcon">
+              <i class="fa-solid fa-bell">
+                <span class="notification-badge">7</span>
+              </i>
+            </button>
+            <div class="dropdown" id="notifDropdown">
+              <div class="notif-header">
+                <p><strong>Notifications</strong></p>
+                <button onclick="markAllNotificationsRead()" class="mark-all-read-btn">
+                  <i class="fas fa-check-double"></i> Mark all read
+                </button>
+              </div>
+              <ul id="notificationsList">
+                <li>
+                  <button type="button" class="notification-item" data-action="view-appointments">
+                    <i class="fas fa-calendar"></i>
+                    3 new appointments scheduled
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="notification-item" data-action="view-lab-results">
+                    <i class="fas fa-flask"></i>
+                    2 lab results ready
+                  </button>
+                </li>
+              </ul>
+              <div class="notification-actions">
+                <button type="button" class="btn-link" id="markAllRead">Mark all as read</button>
+                <button type="button" class="btn-link" id="viewAllNotifications">View all</button>
+              </div>
+            </div>
+          </span>
+          <span class="icon-dropdown-group">
+            <button type="button" class="icon-btn" id="helpIcon">
+              <i class="fa-solid fa-circle-question"></i>
+            </button>
+            <div class="dropdown" id="helpDropdown">
+              <p><strong>Help & Support</strong></p>
+              <ul>
+                <li>
+                  <button type="button" class="help-item" data-action="emergency-call">
+                    <i class="fas fa-phone"></i> Emergency: +63 917 123 4567
+                  </button>
+                </li>
+                <li>
+                  <button type="button" class="help-item" data-action="email-support">
+                    <i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6e1d1b1e1e011c1a2e1e1c0b09000f0d0f1c0b400d0103">[email&#160;protected]</a>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page Header -->
+    <div class="page-header">
+      <div class="page-title">
+        <h1>Prescriptions</h1>
+        <p>View and manage patient medications</p>
+      </div>
+      <div class="header-actions">
+        <button class="filter-btn gynecology-btn" onclick="filterPrescriptionsByType('Gynecology')">
+          <i class="fas fa-female"></i>
+          Gynecology
+        </button>
+        <button class="filter-btn prenatal-btn" onclick="filterPrescriptionsByType('Prenatal')">
+          <i class="fas fa-baby"></i>
+          Prenatal
+        </button>
+        <button type="button" class="btn-history" id="prescriptionHistoryBtn" data-action="view-prescription-history">
+          <i class="fas fa-history"></i> History
+        </button>
+        <button type="button" class="btn-print" id="printPrescriptionBtn" data-action="print-prescription">
+          <i class="fas fa-print"></i> Print
+        </button>
+        <button type="button" class="btn-primary add-medication-btn" id="addMedicationBtn" data-action="add-medication">
+          <i class="fas fa-plus"></i> Add Prescription
+        </button>
+      </div>
+    </div>
+
+    <!-- Medications Table -->
+    <div class="medications-table">
+      <!-- Table Header -->
+      <div class="table-header">
+        <div class="table-cell sortable" data-sort="patientName" data-action="sort">
+          Patient
+        </div>
+        <div class="table-cell sortable" data-sort="medicationName" data-action="sort">
+          Medication
+        </div>
+        <div class="table-cell sortable" data-sort="dosage" data-action="sort">
+          Dosage
+        </div>
+        <div class="table-cell sortable" data-sort="prescribedBy" data-action="sort">
+          Prescribed By
+        </div>
+        <div class="table-cell sortable" data-sort="startDate" data-action="sort">
+          Start Date
+        </div>
+        <div class="table-cell sortable" data-sort="duration" data-action="sort">
+          Duration
+        </div>
+        <div class="table-cell sortable" data-sort="status" data-action="sort">
+          Status
+        </div>
+        <div class="table-cell actions-cell">Actions</div>
+      </div>
+
+      <!-- Table Body -->
+      <div class="table-body" id="medicationsTableBody">
+        <!-- Loading state -->
+        <div class="loading-state" id="loadingState">
+          <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+          </div>
+          <p>Loading prescriptions...</p>
+        </div>
+
+        <!-- Error state -->
+        <div class="error-state" id="errorState" style="display: none;">
+          <div class="error-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <h3>Connection Error</h3>
+          <p>Unable to load prescriptions. Please check your connection.</p>
+          <button type="button" class="btn-primary" id="retryConnection" data-action="retry-connection">
+            <i class="fas fa-redo"></i> Retry
+          </button>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <div class="pagination-info" id="paginationInfo">
+          Showing 0 of 0 entries
+        </div>
+        <div class="pagination-controls">
+          <button type="button" class="pagination-btn" id="firstPage" data-action="first-page" disabled>
+            <i class="fas fa-angle-double-left"></i>
+          </button>
+          <button type="button" class="pagination-btn" id="prevPage" data-action="prev-page" disabled>
+            <i class="fas fa-chevron-left"></i>
+          </button>
+          <div class="page-numbers" id="pageNumbers">
+            <span class="page-number active" data-page="1">1</span>
+          </div>
+          <button type="button" class="pagination-btn" id="nextPage" data-action="next-page" disabled>
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <button type="button" class="pagination-btn" id="lastPage" data-action="last-page" disabled>
+            <i class="fas fa-angle-double-right"></i>
+          </button>
+        </div>
+        <div class="items-per-page">
+          <label for="itemsPerPage">Items per page:</label>
+          <select id="itemsPerPage" data-action="items-per-page">
+            <option value="10">10</option>
+            <option value="25" selected>25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Medication Modal -->
+  <div class="modal" id="medicationModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add Prescription</h2>
+        <button type="button" class="close-btn" id="closeModalBtn" data-action="close-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <form id="medicationForm" novalidate>
+        <div class="form-row">
+          <!-- UPDATED: Searchable Patient Field -->
+          <div class="form-group">
+            <label for="patientName">Patient</label>
+            <div class="searchable-select">
+              <input 
+                type="text" 
+                id="patientName" 
+                name="patientName"
+                placeholder="Type to search patients..." 
+                autocomplete="off"
+                required
+              />
+              <i class="fas fa-search search-icon"></i>
+              <div class="patient-dropdown" id="patientDropdownList">
+                <div class="dropdown-item no-results">Start typing to search patients...</div>
+              </div>
+            </div>
+            <div class="form-error" id="patientNameError"></div>
+            <!-- Hidden fields to store patient data -->
+            <input type="hidden" id="patientId" name="patientId">
+            <input type="hidden" id="patientKey" name="patientKey">
+          </div>
+          
+          <div class="form-group">
+            <label for="patientType">Patient Type</label>
+            <select id="patientType" name="patientType" required>
+              <option value="">-- Select patient type --</option>
+              <option value="Gynecology">Gynecology</option>
+              <option value="Prenatal">Prenatal</option>
+            </select>
+            <div class="form-error" id="patientTypeError"></div>
+          </div>
+        </div>
+
+
+        <!-- Medication Name - Full Width -->
+        <div class="form-group full-width">
+          <label for="medicationName">Medication Name</label>
+          <select id="medicationName" name="medicationName" required>
+              <option value="">-- Select a medication --</option>
+              
+              <!-- Prenatal Vitamins & Supplements -->
+              <optgroup label="Prenatal Vitamins & Supplements">
+                  <option value="Prenatal Multivitamin">Prenatal Multivitamin</option>
+                  <option value="Folic Acid">Folic Acid</option>
+                  <option value="Iron Supplement">Iron Supplement</option>
+                  <option value="Calcium Carbonate">Calcium Carbonate</option>
+                  <option value="Vitamin D3">Vitamin D3</option>
+                  <option value="DHA (Omega-3)">DHA (Omega-3)</option>
+              </optgroup>
+              
+              <!-- Pregnancy-Related Medications -->
+              <optgroup label="Pregnancy-Related Medications">
+                  <option value="Progesterone">Progesterone</option>
+                  <option value="Methyldopa">Methyldopa</option>
+                  <option value="Labetalol">Labetalol</option>
+                  <option value="Nifedipine">Nifedipine</option>
+                  <option value="Metformin">Metformin</option>
+                  <option value="Insulin">Insulin</option>
+                  <option value="Ondansetron (Zofran)">Ondansetron (Zofran)</option>
+                  <option value="Doxylamine/Pyridoxine (Diclegis)">Doxylamine/Pyridoxine (Diclegis)</option>
+              </optgroup>
+              
+              <!-- Contraceptives -->
+              <optgroup label="Contraceptives">
+                  <option value="Combined Oral Contraceptive">Combined Oral Contraceptive</option>
+                  <option value="Progestin-Only Pill">Progestin-Only Pill</option>
+                  <option value="Depo-Provera">Depo-Provera</option>
+                  <option value="Nexplanon">Nexplanon</option>
+                  <option value="Mirena IUD">Mirena IUD</option>
+                  <option value="Copper IUD">Copper IUD</option>
+                  <option value="NuvaRing">NuvaRing</option>
+                  <option value="Ortho Evra Patch">Ortho Evra Patch</option>
+              </optgroup>
+              
+              <!-- Hormone Therapy -->
+              <optgroup label="Hormone Therapy">
+                  <option value="Estradiol">Estradiol</option>
+                  <option value="Conjugated Estrogens (Premarin)">Conjugated Estrogens (Premarin)</option>
+                  <option value="Medroxyprogesterone">Medroxyprogesterone</option>
+                  <option value="Testosterone">Testosterone</option>
+                  <option value="Clomiphene Citrate">Clomiphene Citrate</option>
+                  <option value="Letrozole">Letrozole</option>
+              </optgroup>
+              
+              <!-- Gynecological Conditions -->
+              <optgroup label="Gynecological Treatments">
+                  <option value="Metronidazole">Metronidazole</option>
+                  <option value="Fluconazole">Fluconazole</option>
+                  <option value="Azithromycin">Azithromycin</option>
+                  <option value="Doxycycline">Doxycycline</option>
+                  <option value="Ceftriaxone">Ceftriaxone</option>
+                  <option value="Miconazole">Miconazole</option>
+                  <option value="Terconazole">Terconazole</option>
+              </optgroup>
+              
+              <!-- Menstrual Disorders -->
+              <optgroup label="Menstrual Disorders">
+                  <option value="Tranexamic Acid">Tranexamic Acid</option>
+                  <option value="Naproxen">Naproxen</option>
+                  <option value="Ibuprofen">Ibuprofen</option>
+                  <option value="Norethindrone">Norethindrone</option>
+                  <option value="Danazol">Danazol</option>
+              </optgroup>
+              
+              <!-- Osteoporosis (Post-menopausal) -->
+              <optgroup label="Bone Health">
+                  <option value="Alendronate">Alendronate</option>
+                  <option value="Risedronate">Risedronate</option>
+                  <option value="Denosumab">Denosumab</option>
+                  <option value="Raloxifene">Raloxifene</option>
+              </optgroup>
+          </select>
+          <div class="form-error" id="medicationNameError"></div>
+          <div class="medication-suggestions" id="medicationSuggestions"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="medicationType">Medication Type</label>
+            <select id="medicationType" name="medicationType">
+              <option value="">Select type</option>
+              <option value="tablet">Tablet</option>
+              <option value="capsule">Capsule</option>
+              <option value="liquid">Liquid</option>
+              <option value="injection">Injection</option>
+              <option value="topical">Topical</option>
+              <option value="inhaler">Inhaler</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="dosage">Dosage</label>
+            <select id="dosage" name="dosage" required>
+                <option value="">-- Select dosage --</option>
+                
+                <!-- Microgram Dosages -->
+                <optgroup label="Microgram (mcg)">
+                    <option value="25mcg">25mcg</option>
+                    <option value="50mcg">50mcg</option>
+                    <option value="100mcg">100mcg</option>
+                    <option value="200mcg">200mcg</option>
+                    <option value="400mcg">400mcg</option>
+                    <option value="800mcg">800mcg</option>
+                    <option value="1000mcg">1000mcg</option>
+                </optgroup>
+                
+                <!-- Milligram Dosages -->
+                <optgroup label="Milligram (mg)">
+                    <option value="0.25mg">0.25mg</option>
+                    <option value="0.5mg">0.5mg</option>
+                    <option value="1mg">1mg</option>
+                    <option value="2mg">2mg</option>
+                    <option value="2.5mg">2.5mg</option>
+                    <option value="5mg">5mg</option>
+                    <option value="10mg">10mg</option>
+                    <option value="15mg">15mg</option>
+                    <option value="18mg">18mg</option>
+                    <option value="20mg">20mg</option>
+                    <option value="25mg">25mg</option>
+                    <option value="27mg">27mg</option>
+                    <option value="50mg">50mg</option>
+                    <option value="65mg">65mg</option>
+                    <option value="75mg">75mg</option>
+                    <option value="100mg">100mg</option>
+                    <option value="150mg">150mg</option>
+                    <option value="200mg">200mg</option>
+                    <option value="220mg">220mg</option>
+                    <option value="250mg">250mg</option>
+                    <option value="300mg">300mg</option>
+                    <option value="400mg">400mg</option>
+                    <option value="440mg">440mg</option>
+                    <option value="500mg">500mg</option>
+                    <option value="600mg">600mg</option>
+                    <option value="750mg">750mg</option>
+                    <option value="1000mg">1000mg</option>
+                    <option value="1200mg">1200mg</option>
+                </optgroup>
+                
+                <!-- Gram Dosages -->
+                <optgroup label="Gram (g)">
+                    <option value="1g">1g</option>
+                    <option value="2g">2g</option>
+                    <option value="3g">3g</option>
+                    <option value="5g">5g</option>
+                </optgroup>
+                
+                <!-- International Units -->
+                <optgroup label="International Units (IU)">
+                    <option value="400 IU">400 IU</option>
+                    <option value="800 IU">800 IU</option>
+                    <option value="1000 IU">1000 IU</option>
+                    <option value="2000 IU">2000 IU</option>
+                    <option value="4000 IU">4000 IU</option>
+                    <option value="5000 IU">5000 IU</option>
+                </optgroup>
+                
+                <!-- Percentage Concentrations -->
+                <optgroup label="Topical Concentrations">
+                    <option value="0.1%">0.1%</option>
+                    <option value="0.5%">0.5%</option>
+                    <option value="1%">1%</option>
+                    <option value="2%">2%</option>
+                    <option value="5%">5%</option>
+                    <option value="10%">10%</option>
+                </optgroup>
+                
+                <!-- Unit Dosages -->
+                <optgroup label="Units/Tablets/Capsules">
+                    <option value="1 tablet">1 tablet</option>
+                    <option value="2 tablets">2 tablets</option>
+                    <option value="1 capsule">1 capsule</option>
+                    <option value="2 capsules">2 capsules</option>
+                    <option value="1 suppository">1 suppository</option>
+                    <option value="1 applicator">1 applicator</option>
+                    <option value="1 patch">1 patch</option>
+                    <option value="1 ring">1 ring</option>
+                </optgroup>
+            </select>
+            <div class="form-error" id="dosageError"></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="frequency">Frequency</label>
+            <select id="frequency" name="frequency">
+              <option value="">Select frequency</option>
+              <option value="once-daily">Once daily</option>
+              <option value="twice-daily">Twice daily</option>
+              <option value="three-times-daily">Three times daily</option>
+              <option value="four-times-daily">Four times daily</option>
+              <option value="as-needed">As needed</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="prescribedBy">Prescribed By</label>
+            <select id="prescribedBy" name="prescribedBy" required>
+              <option value="">Select a provider...</option>
+              <option value="Dr. Gerola Simisim">Dr. Gerola Simisim</option>
+            </select>
+            <div class="form-error" id="prescribedByError"></div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" name="startDate" required>
+            <div class="form-error" id="startDateError"></div>
+          </div>
+          <div class="form-group">
+            <label for="duration">Duration (Days)</label>
+            <input type="number" id="duration" name="duration" placeholder="e.g., 30" min="1" max="365" required>
+            <div class="form-error" id="durationError"></div>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="instructions">Special Instructions</label>
+          <textarea id="instructions" name="instructions" rows="4" placeholder="Special instructions for taking this medication..." maxlength="500"></textarea>
+          <div class="character-counter">
+            <span id="instructionsCount">0</span>/500 characters
+          </div>
+        </div>
+
+<div class="form-group full-width">
+  <label for="sideEffects">Potential Side Effects</label>
+  <div class="custom-multiselect">
+    <div class="selected-items" id="selectedItems">
+      <span class="placeholder">Click to select side effects...</span>
+    </div>
+    <div class="dropdown-container" id="dropdownContainer">
+      <div class="optgroup">
+        <div class="optgroup-label">Common Side Effects</div>
+        <div class="option" data-value="NoSideEffects">No side effects</div>
+        <div class="option" data-value="Nausea">Nausea</div>
+        <div class="option" data-value="Vomiting">Vomiting</div>
+        <div class="option" data-value="Diarrhea">Diarrhea</div>
+        <div class="option" data-value="Constipation">Constipation</div>
+        <div class="option" data-value="Headache">Headache</div>
+        <div class="option" data-value="Dizziness">Dizziness</div>
+        <div class="option" data-value="Fatigue">Fatigue</div>
+        <div class="option" data-value="Drowsiness">Drowsiness</div>
+        <div class="option" data-value="Insomnia">Insomnia</div>
+        <div class="option" data-value="Loss of appetite">Loss of appetite</div>
+        <div class="option" data-value="Weight gain">Weight gain</div>
+        <div class="option" data-value="Weight loss">Weight loss</div>
+        <div class="option" data-value="Dry mouth">Dry mouth</div>
+        <div class="option" data-value="Metallic taste">Metallic taste</div>
+      </div>
+
+      <div class="optgroup">
+        <div class="optgroup-label">Cardiovascular Side Effects</div>
+        <div class="option" data-value="Hypotension">Hypotension (low blood pressure)</div>
+        <div class="option" data-value="Hypertension">Hypertension (high blood pressure)</div>
+        <div class="option" data-value="Bradycardia">Bradycardia (slow heart rate)</div>
+        <div class="option" data-value="Tachycardia">Tachycardia (fast heart rate)</div>
+        <div class="option" data-value="Palpitations">Palpitations</div>
+        <div class="option" data-value="Chest pain">Chest pain</div>
+        <div class="option" data-value="Edema">Edema (swelling)</div>
+        <div class="option" data-value="Blood clots">Blood clots</div>
+        <div class="option" data-value="Stroke risk">Increased stroke risk</div>
+      </div>
+
+      <div class="optgroup">
+        <div class="optgroup-label">Hormonal Side Effects</div>
+        <div class="option" data-value="Irregular bleeding">Irregular menstrual bleeding</div>
+        <div class="option" data-value="Amenorrhea">Amenorrhea (absence of periods)</div>
+        <div class="option" data-value="Breakthrough bleeding">Breakthrough bleeding</div>
+        <div class="option" data-value="Breast tenderness">Breast tenderness</div>
+        <div class="option" data-value="Mood changes">Mood changes</div>
+        <div class="option" data-value="Depression">Depression</div>
+        <div class="option" data-value="Anxiety">Anxiety</div>
+        <div class="option" data-value="Decreased libido">Decreased libido</div>
+        <div class="option" data-value="Hot flashes">Hot flashes</div>
+        <div class="option" data-value="Night sweats">Night sweats</div>
+        <div class="option" data-value="Acne">Acne</div>
+        <div class="option" data-value="Hair loss">Hair loss</div>
+        <div class="option" data-value="Hirsutism">Hirsutism (excess hair growth)</div>
+      </div>
+
+      <div class="optgroup">
+        <div class="optgroup-label">Gastrointestinal Side Effects</div>
+        <div class="option" data-value="Abdominal pain">Abdominal pain</div>
+        <div class="option" data-value="Bloating">Bloating</div>
+        <div class="option" data-value="Heartburn">Heartburn</div>
+        <div class="option" data-value="Indigestion">Indigestion</div>
+        <div class="option" data-value="Gastritis">Gastritis</div>
+        <div class="option" data-value="Peptic ulcer">Peptic ulcer</div>
+        <div class="option" data-value="Dark stools">Dark stools</div>
+        <div class="option" data-value="Liver toxicity">Liver toxicity</div>
+      </div>
+
+      <div class="optgroup">
+        <div class="optgroup-label">Neurological Side Effects</div>
+        <div class="option" data-value="Tremor">Tremor</div>
+        <div class="option" data-value="Confusion">Confusion</div>
+        <div class="option" data-value="Memory problems">Memory problems</div>
+        <div class="option" data-value="Seizures">Seizures</div>
+        <div class="option" data-value="Peripheral neuropathy">Peripheral neuropathy</div>
+        <div class="option" data-value="Migraine">Migraine</div>
+        <div class="option" data-value="Vertigo">Vertigo</div>
+      </div>
+
+      <div class="optgroup">
+        <div class="optgroup-label">Musculoskeletal Side Effects</div>
+        <div class="option" data-value="Muscle cramps">Muscle cramps</div>
+        <div class="option" data-value="Joint pain">Joint pain</div>
+        <div class="option" data-value="Back pain">Back pain</div>
+        <div class="option" data-value="Bone pain">Bone pain</div>
+        <div class="option" data-value="Osteonecrosis">Osteonecrosis (jaw)</div>
+        <div class="option" data-value="Fracture risk">Increased fracture risk</div>
+      </div>
+
+      <div class="optgroup">
+        <div class="optgroup-label">Skin and Allergic Reactions</div>
+        <div class="option" data-value="Rash">Rash</div>
+        <div class="option" data-value="Itching">Itching</div>
+        <div class="option" data-value="Hives">Hives</div>
+        <div class="option" data-value="Photosensitivity">Photosensitivity</div>
+        <div class="option" data-value="Melasma">Melasma (skin discoloration)</div>
+        <div class="option" data-value="Allergic reaction">Allergic reaction</div>
+        <div class="option" data-value="Anaphylaxis">Anaphylaxis (severe allergic reaction)</div>
+      </div>
+
+      <div class="optgroup">
+        <div class="optgroup-label">Reproductive Side Effects</div>
+        <div class="option" data-value="Ovarian cysts">Ovarian cysts</div>
+        <div class="option" data-value="Cervical changes">Cervical changes</div>
+        <div class="option" data-value="Vaginal discharge">Vaginal discharge</div>
+        <div class="option" data-value="Vaginal dryness">Vaginal dryness</div>
+        <div class="option" data-value="Pelvic pain">Pelvic pain</div>
+        <div class="option" data-value="UTI risk">Increased UTI risk</div>
+      </div>
+
+      <div class="optgroup">
+        <div class="optgroup-label">Metabolic Side Effects</div>
+        <div class="option" data-value="Hyperglycemia">Hyperglycemia (high blood sugar)</div>
+        <div class="option" data-value="Hypoglycemia">Hypoglycemia (low blood sugar)</div>
+        <div class="option" data-value="Insulin resistance">Insulin resistance</div>
+        <div class="option" data-value="Electrolyte imbalance">Electrolyte imbalance</div>
+        <div class="option" data-value="Fluid retention">Fluid retention</div>
+        <div class="option" data-value="Cholesterol changes">Cholesterol changes</div>
+      </div>
+
+      <div class="optgroup">
+        <div class="optgroup-label">Hematological Side Effects</div>
+        <div class="option" data-value="Anemia">Anemia</div>
+        <div class="option" data-value="Thrombosis">Thrombosis</div>
+        <div class="option" data-value="Easy bruising">Easy bruising</div>
+        <div class="option" data-value="Heavy bleeding">Heavy bleeding</div>
+        <div class="option" data-value="Clotting disorders">Clotting disorders</div>
+      </div>
+
+      <div class="optgroup">
+        <div class="optgroup-label">Respiratory Side Effects</div>
+        <div class="option" data-value="Shortness of breath">Shortness of breath</div>
+        <div class="option" data-value="Cough">Cough</div>
+        <div class="option" data-value="Pulmonary embolism">Pulmonary embolism</div>
+        <div class="option" data-value="Bronchospasm">Bronchospasm</div>
+      </div>
+
+      <div class="optgroup">
+        <div class="optgroup-label">Eye and Vision</div>
+        <div class="option" data-value="Blurred vision">Blurred vision</div>
+        <div class="option" data-value="Dry eyes">Dry eyes</div>
+        <div class="option" data-value="Visual disturbances">Visual disturbances</div>
+        <div class="option" data-value="Retinal changes">Retinal changes</div>
+      </div>
+
+      <div class="optgroup">
+        <div class="optgroup-label">Pregnancy-Specific Side Effects</div>
+        <div class="option" data-value="Birth defects">Birth defects</div>
+        <div class="option" data-value="Preterm labor">Preterm labor</div>
+        <div class="option" data-value="Gestational diabetes">Gestational diabetes</div>
+        <div class="option" data-value="Preeclampsia">Preeclampsia</div>
+        <div class="option" data-value="Fetal growth restriction">Fetal growth restriction</div>
+        <div class="option" data-value="Pregnancy loss">Pregnancy loss</div>
+      </div>
+    </div>
+  </div>
+  <input type="hidden" id="sideEffects" name="sideEffects" />
+</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="refillReminder">Refill Reminder (Days Before)</label>
+            <input type="number" id="refillReminder" name="refillReminder" placeholder="e.g., 5" min="1" max="30">
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="cancelBtn" data-action="cancel-form">
+            <i class="fas fa-times"></i> Cancel
+          </button>
+          <button type="button" class="btn-secondary" id="saveAsDraftBtn" data-action="save-draft">
+            <i class="fas fa-save"></i> Save as Draft
+          </button>
+          <button type="submit" class="btn-primary" id="submitBtn" data-action="submit-form">
+            <i class="fas fa-plus"></i> Add Prescription
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Medication Details Modal -->
+  <div class="modal" id="medicationDetailsModal">
+    <div class="modal-content large">
+      <div class="modal-header">
+        <h2>Medication Details</h2>
+        <button type="button" class="close-btn" data-action="close-details-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="medicationDetailsBody">
+        <!-- Content will be populated dynamically -->
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" data-action="close-details-modal">
+          <i class="fas fa-times"></i> Close
+        </button>
+        <button type="button" class="btn-secondary" id="printFromDetailsBtn" data-action="print-prescription">
+          <i class="fas fa-print"></i> Print
+        </button>
+        <button type="button" class="btn-primary" id="editFromDetailsBtn" data-action="edit-from-details">
+          <i class="fas fa-edit"></i> Edit
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prescription History Modal -->
+  <div class="history-modal" id="prescriptionHistoryModal">
+    <div class="history-modal-content">
+      <div class="history-modal-header">
+        <h2><i class="fas fa-history"></i>History</h2>
+        <button type="button" class="close-btn" id="closeHistoryModal" data-action="close-history-modal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+
+      <div class="history-modal-body">
+        <!-- Filters -->
+        <div class="history-filters">
+          <div class="filter-group">
+            <label>Patient</label>
+            <select id="historyPatientFilter">
+              <option value="">All Patients</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Action Type</label>
+            <select id="historyActionFilter">
+              <option value="">All Actions</option>
+              <option value="added">Added</option>
+              <option value="modified">Modified</option>
+              <option value="deleted">Deleted</option>
+              <option value="completed">Completed</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <label>Date From</label>
+            <input type="date" id="historyDateFrom">
+          </div>
+          <div class="filter-group">
+            <label>Date To</label>
+            <input type="date" id="historyDateTo">
+          </div>
+          <div class="filter-group">
+            <label>Medication</label>
+            <input type="text" id="historyMedicationFilter" placeholder="Search medications...">
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div class="history-loading" id="historyLoading" style="display: none;">
+          <div class="history-loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+          </div>
+          <p>Loading prescription history...</p>
+        </div>
+
+        <!-- Timeline -->
+        <div class="history-timeline" id="historyTimeline">
+          <!-- History items will be populated here -->
+        </div>
+
+        <!-- No History State -->
+        <div class="no-history" id="noHistoryState" style="display: none;">
+          <div class="no-history-icon">
+            <i class="fas fa-history"></i>
+          </div>
+          <h3>No History Available</h3>
+          <p>Prescription activities and changes will appear here as they occur. Start by adding medications to build your history.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal" id="confirmationModal">
+    <div class="modal-content small">
+      <div class="modal-header">
+        <h2 id="confirmationTitle">Confirm Action</h2>
+        <button type="button" class="close-btn" data-action="close-confirmation">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="confirmation-icon">
+          <i class="fas fa-question-circle"></i>
+        </div>
+        <p id="confirmationMessage">Are you sure you want to perform this action?</p>
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" id="confirmationCancelBtn" data-action="cancel-confirmation">
+          <i class="fas fa-times"></i> Cancel
+        </button>
+        <button type="button" class="btn-danger" id="confirmationConfirmBtn" data-action="confirm-action">
+          <i class="fas fa-check"></i> Confirm
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prescription Selection Modal -->
+  <div class="modal" id="prescriptionSelectionModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Select Prescription to Print</h2>
+        <button type="button" class="close-btn" onclick="this.closest('.modal').style.display='none'">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="prescriptionSelectionBody" style="max-height: 400px; overflow-y: auto;">
+        <!-- Prescription selection items will be populated here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Authentication Required Modal -->
+  <div class="modal" id="authRequiredModal" style="display: none;">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+      <h2 style="color: var(--heart-red); margin-bottom: 20px;">
+        <i class="fas fa-lock"></i> Authentication Required
+      </h2>
+      <p style="margin-bottom: 20px;">You need to be logged in to access this page.</p>
+      <button onclick="window.location.href='Admin login.html'" style="background: linear-gradient(135deg, var(--heart-red), var(--deep-red)); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+        <i class="fas fa-sign-in-alt"></i> Go to Login
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Notifications Container -->
+  <div class="toast-container" id="toastContainer">
+    <!-- Toast notifications will be added here dynamically -->
+  </div>
+
+  <!-- Floating Action Button (Mobile) -->
+  <button type="button" class="floating-action-btn" id="floatingAddBtn" data-action="add-medication">
+    <i class="fas fa-plus"></i>
+  </button>
+
+  <!-- Print Options Modal -->
+  <div class="modal" id="printOptionsModal" style="display: none;">
+    <div class="modal-content small">
+      <div class="modal-header">
+        <h2>Print Options</h2>
+        <button type="button" class="close-btn" onclick="this.closest('.modal').style.display='none'">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: center; padding: 30px;">
+        <p style="margin-bottom: 25px; color: #666;">Choose how you'd like to print the prescription:</p>
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+          <button type="button" id="printNewWindowBtn" class="btn-primary" style="width: 100%; justify-content: center;">
+            <i class="fas fa-external-link-alt"></i> Open in New Window
+          </button>
+          <button type="button" id="printDirectBtn" class="btn-primary" style="width: 100%; justify-content: center;">
+            <i class="fas fa-print"></i> Print Directly
+          </button>
+          <button type="button" id="printPreviewBtn" class="btn-secondary" style="width: 100%; justify-content: center;">
+            <i class="fas fa-eye"></i> Preview First
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK - Updated to use compat version -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="Prescriptions.js"></script>
+</body>
+</html>

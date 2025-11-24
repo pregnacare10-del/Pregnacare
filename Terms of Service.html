@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PregnaCare(Terms of Service)</title>
+  <link rel="icon" href="icons/love 1.png">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* PregnaCare Terms of Service Page Styles */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #fdc5ce 0%, #fabdcc 100%);
+      min-height: 100vh;
+      padding: 20px 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .header {
+      background: #fcaeae;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(231, 29, 29, 0.15);
+      text-align: center;
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .logo {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .header h1 {
+      margin: 10px 0 5px;
+      color: #df3c44;
+      font-size: 2.2rem;
+      font-weight: 700;
+    }
+
+    .header p {
+      color: #030303;
+      font-size: 1rem;
+      margin: 0;
+      opacity: 0.8;
+    }
+
+    .content-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(231, 29, 29, 0.1);
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .last-updated {
+      background: linear-gradient(135deg, #f05d7d, #d42c42);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 25px;
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 30px;
+    }
+
+    .content-box h2 {
+      color: #df3c44;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 30px 0 15px 0;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f05d7d;
+    }
+
+    .content-box h2:first-child {
+      margin-top: 0;
+    }
+
+    .content-box h3 {
+      color: #281e80;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 25px 0 12px 0;
+    }
+
+    .content-box p {
+      color: #333;
+      line-height: 1.7;
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+    }
+
+    .content-box ul, .content-box ol {
+      margin: 15px 0;
+      padding-left: 25px;
+    }
+
+    .content-box li {
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(240, 93, 125, 0.1), rgba(212, 44, 66, 0.1));
+      border-left: 4px solid #f05d7d;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+
+    .highlight-box p {
+      margin: 0;
+      font-weight: 500;
+      color: #d42c42;
+    }
+
+    .contact-info {
+      background: rgba(40, 30, 128, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 25px 0;
+      border: 1px solid rgba(40, 30, 128, 0.2);
+    }
+
+    .contact-info h4 {
+      color: #281e80;
+      margin: 0 0 10px 0;
+      font-size: 1.1rem;
+    }
+
+    .contact-info p {
+      margin: 5px 0;
+      color: #333;
+    }
+
+    .back-button {
+      background: linear-gradient(135deg, #f05d7d, #d42c42);
+      color: #fff;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(240, 93, 125, 0.3);
+      margin-bottom: 20px;
+    }
+
+    .back-button:hover {
+      background: linear-gradient(135deg, #d42c42, #b91e2e);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(240, 93, 125, 0.4);
+    }
+
+    .section-nav {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-nav h3 {
+      color: #df3c44;
+      margin: 0 0 15px 0;
+      font-size: 1.1rem;
+    }
+
+    .section-nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .section-nav li {
+      margin: 8px 0;
+    }
+
+    .section-nav a {
+      color: #281e80;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .section-nav a:hover {
+      color: #f05d7d;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 15px;
+      }
+      
+      .header, .content-box {
+        padding: 1.5rem;
+      }
+      
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .content-box h2 {
+        font-size: 1.3rem;
+      }
+      
+      .back-button {
+        padding: 10px 20px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="mother.png" alt="PregnaCare Logo" class="logo" />
+      <h1>Terms of Service</h1>
+      <p>PregnaCare Healthcare Monitoring and Tracking System</p>
+    </div>
+
+    <a href="Account.html" class="back-button">
+      <i class="fas fa-arrow-left"></i>
+      Back to Registration
+    </a>
+
+    <div class="section-nav">
+      <h3>Quick Navigation</h3>
+      <ul>
+        <li><a href="#acceptance">1. Acceptance of Terms</a></li>
+        <li><a href="#services">2. Description of Services</a></li>
+        <li><a href="#admin-responsibilities">3. Admin Responsibilities</a></li>
+        <li><a href="#user-accounts">4. User Accounts</a></li>
+        <li><a href="#privacy">5. Privacy and Data Protection</a></li>
+        <li><a href="#prohibited-uses">6. Prohibited Uses</a></li>
+        <li><a href="#liability">7. Limitation of Liability</a></li>
+        <li><a href="#modifications">8. Modifications</a></li>
+        <li><a href="#contact">9. Contact Information</a></li>
+      </ul>
+    </div>
+
+    <div class="content-box">
+      <div class="last-updated">
+        <i class="fas fa-calendar-alt"></i>
+        Last Updated: June 22, 2025
+      </div>
+
+      <div class="highlight-box">
+        <p><strong>Important:</strong> By creating an admin account and using PregnaCare, you agree to be bound by these Terms of Service. Please read them carefully.</p>
+      </div>
+
+      <h2 id="acceptance">1. Acceptance of Terms</h2>
+      <p>By accessing and using the PregnaCare healthcare management system ("Service"), you accept and agree to be bound by the terms and provision of this agreement. These Terms of Service ("Terms") govern your use of our web-based platform designed for pregnancy care management.</p>
+
+      <h2 id="services">2. Description of Services</h2>
+      <p>PregnaCare is a comprehensive healthcare management platform that provides:</p>
+      <ul>
+        <li>Patient management and tracking systems</li>
+        <li>Appointment scheduling and management</li>
+        <li>Medical record storage and retrieval</li>
+        <li>Communication tools between healthcare providers and patients</li>
+        <li>Reporting and analytics capabilities</li>
+        <li>Administrative tools for healthcare facility management</li>
+      </ul>
+
+      <h3>Service Availability</h3>
+      <p>We strive to maintain 99.9% uptime but cannot guarantee uninterrupted service. Scheduled maintenance will be communicated in advance when possible.</p>
+
+      <h2 id="admin-responsibilities">3. Admin Responsibilities</h2>
+      <p>As an administrator of the PregnaCare system, you agree to:</p>
+      <ul>
+        <li><strong>Maintain Confidentiality:</strong> Protect all patient information and system data in accordance with HIPAA and other applicable privacy laws</li>
+        <li><strong>Authorized Use Only:</strong> Use the system only for legitimate healthcare management purposes</li>
+        <li><strong>Data Accuracy:</strong> Ensure all entered data is accurate and up-to-date</li>
+        <li><strong>Security Compliance:</strong> Follow all security protocols and immediately report any suspected breaches</li>
+        <li><strong>Staff Training:</strong> Ensure all users under your supervision are properly trained on system use and privacy requirements</li>
+        <li><strong>Regular Backups:</strong> Maintain regular backups of critical data as recommended</li>
+      </ul>
+
+      <h2 id="user-accounts">4. User Accounts</h2>
+      <h3>Account Creation</h3>
+      <p>Admin accounts require verification through an admin code. You are responsible for:</p>
+      <ul>
+        <li>Providing accurate and complete information during registration</li>
+        <li>Maintaining the security of your account credentials</li>
+        <li>Notifying us immediately of any unauthorized access</li>
+        <li>All activities that occur under your account</li>
+      </ul>
+
+      <h3>Account Termination</h3>
+      <p>We reserve the right to suspend or terminate accounts that violate these terms or pose a security risk.</p>
+
+      <h2 id="privacy">5. Privacy and Data Protection</h2>
+      <p>Patient privacy is our highest priority. Our data handling practices include:</p>
+      <ul>
+        <li><strong>HIPAA Compliance:</strong> All patient data is handled in accordance with HIPAA regulations</li>
+        <li><strong>Encryption:</strong> Data is encrypted both in transit and at rest</li>
+        <li><strong>Access Controls:</strong> Strict role-based access controls limit data access</li>
+        <li><strong>Audit Trails:</strong> All system access and data modifications are logged</li>
+        <li><strong>Data Retention:</strong> Data is retained only as long as necessary for healthcare purposes or as required by law</li>
+      </ul>
+
+      <div class="highlight-box">
+        <p><strong>Data Breach Protocol:</strong> Any suspected data breach must be reported immediately to our security team at security@pregnacare.com</p>
+      </div>
+
+      <h2 id="prohibited-uses">6. Prohibited Uses</h2>
+      <p>You may not use PregnaCare for:</p>
+      <ul>
+        <li>Any unlawful purpose or to solicit unlawful acts</li>
+        <li>Violating any international, federal, provincial, or state regulations or laws</li>
+        <li>Transmitting or procuring the sending of any advertising or promotional material without our prior written consent</li>
+        <li>Impersonating or attempting to impersonate the company, employees, or other users</li>
+        <li>Accessing data you are not authorized to view</li>
+        <li>Attempting to interfere with, compromise the security of, or decipher any transmissions</li>
+        <li>Sharing login credentials with unauthorized individuals</li>
+      </ul>
+
+      <h2 id="liability">7. Limitation of Liability</h2>
+      <p>PregnaCare is provided "as is" without warranties of any kind. We are not liable for:</p>
+      <ul>
+        <li>Medical decisions made using information from our system</li>
+        <li>Data loss due to user error or system failure</li>
+        <li>Interruption of service due to maintenance or technical issues</li>
+        <li>Unauthorized access resulting from user negligence</li>
+      </ul>
+
+      <h3>Professional Responsibility</h3>
+      <p>This system is a tool to assist healthcare professionals. All medical decisions remain the responsibility of qualified healthcare providers.</p>
+
+      <h2 id="modifications">8. Modifications to Terms</h2>
+      <p>We reserve the right to modify these terms at any time. Changes will be effective immediately upon posting. Continued use of the service after changes constitutes acceptance of the new terms.</p>
+
+      <h3>Notification of Changes</h3>
+      <p>Significant changes will be communicated via:</p>
+      <ul>
+        <li>Email notification to all admin users</li>
+        <li>In-system notifications</li>
+        <li>Updates to this Terms of Service page</li>
+      </ul>
+
+      <h2 id="contact">9. Contact Information</h2>
+      <div class="contact-info">
+        <h4>PregnaCare Support Team</h4>
+        <p><strong>General Support:</strong> support@pregnacare.com</p>
+        <p><strong>Security Issues:</strong> security@pregnacare.com</p>
+        <p><strong>Legal Inquiries:</strong> legal@pregnacare.com</p>
+        <p><strong>Phone:</strong> +1 (555) 123-CARE</p>
+        <p><strong>Business Hours:</strong> Monday - Friday, 8:00 AM - 6:00 PM EST</p>
+        <p><strong>Emergency Support:</strong> Available 24/7 for critical system issues</p>
+      </div>
+
+      <h3>Governing Law</h3>
+      <p>These Terms of Service are governed by and construed in accordance with the laws of the jurisdiction in which PregnaCare operates, without regard to conflict of law principles.</p>
+
+      <h3>Severability</h3>
+      <p>If any provision of these Terms is found unenforceable, the remainder will remain in full force and effect.</p>
+
+      <div class="highlight-box">
+        <p><strong>Acknowledgment:</strong> By clicking "I agree to the Terms of Service" during registration, you acknowledge that you have read, understood, and agree to be bound by these terms.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Highlight current section in navigation
+    window.addEventListener('scroll', function() {
+      const sections = document.querySelectorAll('h2[id]');
+      const navLinks = document.querySelectorAll('.section-nav a');
+      
+      let currentSection = '';
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 100) {
+          currentSection = section.id;
+        }
+      });
+      
+      navLinks.forEach(link => {
+        link.style.color = '#281e80';
+        if (link.getAttribute('href') === '#' + currentSection) {
+          link.style.color = '#f05d7d';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,463 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PregnaCare(Appointments)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="Appointments.css" />
+  <link rel="icon" href="icons/love 1.png">
+  <link rel="preconnect" href="google-services.json">
+</head>
+<body>
+ <div class="sidebar">
+    <div class="logo">
+      <div class="gradient-logo">
+        <img src="icons/mother.png" alt="PregnaCare Logo" />
+      </div>
+      <h2><span class="heart">Pregna</span><span class="care">Care</span></h2>
+      <p class="role">Maternity Clinic Admin</p>
+    </div>
+    <ul class="nav">
+      <li><a href="DashBoard.html"><i class="fa-solid fa-chart-column"></i>Dashboard</a></li>
+      <li><a href="Patients.html"><i class="fa-solid fa-circle-user"></i>Patients</a></li>
+      <li><a href="Appointments.html" class="active"><i class="fa-solid fa-calendar-days"></i>Appointments</a></li>
+      <li><a href="Lab Results.html"><i class="fa-solid fa-flask"></i>Lab Results</a></li>
+      <li><a href="Prescriptions.html"><i class="fa-solid fa-pills"></i>Prescriptions </a></li>
+      <li><a href="Reports.html"><i class="fa-solid fa-chart-bar"></i>Reports</a></li>
+    </ul>
+
+    <!-- User Profile Section -->
+    <div class="user">
+      <div class="circle">US</div>
+      <div>
+        <p>Loading...</p>
+        <span>Admin</span>
+      </div>
+    </div>
+
+    <!-- Dropdown Menu - Only Logout -->
+    <div class="dropdown-menu">
+      <a href="#" class="logout" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="search-header">
+      <div class="search">
+        <input type="text" placeholder="Search patients, appointments..." />
+        <div class="icons">
+          <span class="icon-dropdown-group">
+            <i class="fa-solid fa-bell" id="notifIcon">
+              <span class="notification-badge" id="notificationBadge">0</span>
+            </i>
+            <div class="dropdown" id="notifDropdown">
+              <p><strong>Notifications</strong></p>
+              <ul id="notificationList">
+                <li>No new notifications</li>
+              </ul>
+            </div>
+          </span>
+          <span class="icon-dropdown-group">
+            <i class="fa-solid fa-circle-question" id="helpIcon"></i>
+            <div class="dropdown" id="helpDropdown">
+              <p><strong>Help & Support</strong></p>
+              <ul>
+                <li><i class="fas fa-phone"></i> Emergency: +63 917 123 4567</li>
+                <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection#681b1d1818071a1c28181a0d0f06090b091a0d460b0705"><span class="__cf_email__" data-cfemail="76050306061904023616041315181913110417555913">[email&#160;protected]</span></a></li>
+                <li><i class="fas fa-book"></i> User Manual</li>
+              </ul>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="appointments-section">
+      <div class="header">
+        <div>
+          <h2>Appointments</h2>
+          <p>Manage patient appointments and schedules</p>
+        </div>
+        <button id="openModal"><i class="fas fa-plus"></i> Schedule Appointment</button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <h3 id="todayCount">0</h3>
+          <p>Today's Appointments</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="totalCount">0</h3>
+          <p>Total Appointments</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="pendingCount">0</h3>
+          <p>Pending Requests</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="completedCount">0</h3>
+          <p>Completed Today</p>
+        </div>
+      </div>
+
+      <div class="upcoming-cards card-container">
+        <h3>Upcoming Appointments Today</h3>
+        <div class="cards" id="appointmentCards">
+          <!-- Today's appointments will be inserted here -->
+        </div>
+      </div>
+
+      <div class="table-search">
+        <input type="text" placeholder="Search appointments..." id="tableSearch" />
+      </div>
+
+      <!-- Appointments Controls with History Toggle -->
+      <div class="appointments-controls">
+        <div class="view-toggle-container">
+          <div class="view-toggle">
+            <button id="activeAppointmentsBtn" class="toggle-btn active">
+              <i class="fas fa-calendar-check"></i>
+              Active Appointments
+              <span class="count-badge" id="activeCountBadge">0</span>
+            </button>
+            <button id="historyAppointmentsBtn" class="toggle-btn">
+              <i class="fas fa-history"></i>
+              Appointment History
+              <span class="count-badge" id="historyCountBadge">0</span>
+            </button>
+            <button class="filter-btn gynecology-btn" onclick="filterAppointmentsByType('Gynecology')">
+              <i class="fas fa-female"></i>
+              Gynecology
+            </button>
+            <button class="filter-btn prenatal-btn" onclick="filterAppointmentsByType('Prenatal')">
+              <i class="fas fa-baby"></i>
+              Prenatal
+            </button>
+          </div>
+          
+          <!-- History Filters (initially hidden) -->
+          <div class="history-filters" id="historyFilters" style="display: none;">
+            <select id="historyStatusFilter">
+              <option value="">All Statuses</option>
+              <option value="completed">Completed</option>
+              <option value="cancelled">Cancelled</option>
+              <option value="no-show">No Show</option>
+            </select>
+            
+            <select id="historyDateFilter">
+              <option value="">All Time</option>
+              <option value="last-week">Last Week</option>
+              <option value="last-month">Last Month</option>
+              <option value="last-3-months">Last 3 Months</option>
+              <option value="last-6-months">Last 6 Months</option>
+              <option value="last-year">Last Year</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="appointments-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+              <th>Visit #</th>
+              <th>Purpose</th>
+              <th>Provider</th>
+              <th>Follow-up</th>
+              <th class="actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="appointmentsBody">
+            <tr><td colspan="8" class="no-data">Loading appointments...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENHANCED MODAL WITH SEARCHABLE PATIENT DROPDOWN -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h3>Schedule New Appointment</h3>
+      <form id="appointmentForm">
+        <!-- IMPROVED SEARCHABLE PATIENT FIELD -->
+        <div class="patient-field-wrapper">
+          <div class="searchable-select">
+            <input 
+              type="text" 
+              id="patientName" 
+              name="patientName"
+              placeholder="Type to search patients..." 
+              autocomplete="off"
+              required
+            />
+            <i class="fas fa-search search-icon"></i>
+            <div class="patient-dropdown" id="patientDropdownList">
+              <div class="dropdown-item no-results">Start typing to search patients...</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- PATIENT TYPE -->
+        <div class="patient-type-container">
+          <label for="patientType" class="floating-label">Patient Type</label>
+          <select id="patientType" required>
+            <option value="">Select patient type...</option>
+            <option value="Gynecology">Gynecology</option>
+            <option value="Prenatal">Prenatal</option>
+          </select>
+          <small class="field-help">Select the type of care for this appointment</small>
+        </div>
+        
+        <!-- APPOINTMENT DATE AND TIME -->
+        <div class="appointment-datetime-container">
+          <label for="appointmentTime" class="floating-label">Appointment Start Time</label>
+          <input type="datetime-local" id="appointmentTime" required />
+        </div>
+        
+        <!-- APPOINTMENT END TIME -->
+        <div class="appointment-datetime-container">
+          <label for="appointmentEndTime" class="floating-label">Appointment End Time</label>
+          <input type="datetime-local" id="appointmentEndTime" required />
+          <small class="field-help">End time must be after start time</small>
+        </div>
+        
+        <!-- VISIT NUMBER -->
+        <div class="visit-number-container">
+          <label for="visitNumber" class="floating-label">Visit Number</label>
+          <input type="number" id="visitNumber" min="1" placeholder="1st visit, 2nd visit, etc." required />
+          <small class="field-help">Enter the visit number for this patient (e.g., 1 for first visit)</small>
+        </div>
+        
+        <!-- PURPOSE DROPDOWN -->
+        <select id="purpose" required>
+          <option value="">Select appointment purpose...</option>
+          
+          <!-- GYNECOLOGY PURPOSES -->
+          <optgroup label="🔷 GYNECOLOGY - Routine Visits">
+            <option value="Annual Gynecology Exam">Annual Gynecology Exam</option>
+            <option value="Pap Smear">Pap Smear</option>
+            <option value="Well Woman Exam">Well Woman Exam</option>
+            <option value="Follow-up Visit">Follow-up Visit</option>
+          </optgroup>
+          
+          <optgroup label="🔷 GYNECOLOGY - Consultations">
+            <option value="Contraception Consultation">Contraception Consultation</option>
+            <option value="Family Planning">Family Planning</option>
+            <option value="Menopause Consultation">Menopause Consultation</option>
+            <option value="Fertility Consultation">Fertility Consultation</option>
+            <option value="Infertility Evaluation">Infertility Evaluation</option>
+          </optgroup>
+          
+          <optgroup label="🔷 GYNECOLOGY - Concerns & Treatment">
+            <option value="Irregular Periods">Irregular Periods</option>
+            <option value="Pelvic Pain">Pelvic Pain</option>
+            <option value="Abnormal Bleeding">Abnormal Bleeding</option>
+            <option value="PCOS Management">PCOS Management</option>
+            <option value="Endometriosis">Endometriosis</option>
+            <option value="STI Testing">STI Testing</option>
+            <option value="Infection Treatment">Infection Treatment</option>
+          </optgroup>
+          
+          <optgroup label="🔷 GYNECOLOGY - Procedures">
+            <option value="IUD Insertion">IUD Insertion</option>
+            <option value="IUD Removal">IUD Removal</option>
+            <option value="Implant Insertion">Implant Insertion</option>
+            <option value="Implant Removal">Implant Removal</option>
+            <option value="Colposcopy">Colposcopy</option>
+            <option value="Biopsy">Biopsy</option>
+          </optgroup>
+          
+          <!-- PRENATAL PURPOSES -->
+          <optgroup label="🤰 PRENATAL - Routine Care">
+            <option value="Prenatal Checkup">Prenatal Checkup</option>
+            <option value="First Prenatal Visit">First Prenatal Visit</option>
+            <option value="Routine Prenatal Monitoring">Routine Prenatal Monitoring</option>
+            <option value="Prenatal Follow-up">Prenatal Follow-up</option>
+            <option value="Postpartum Checkup">Postpartum Checkup (6 weeks)</option>
+            <option value="Postpartum Follow-up">Postpartum Follow-up</option>
+          </optgroup>
+          
+          <optgroup label="🤰 PRENATAL - Tests & Ultrasounds">
+            <option value="Ultrasound - Dating">Ultrasound - Dating (6-9 weeks)</option>
+            <option value="Ultrasound - First Trimester">Ultrasound - First Trimester (11-14 weeks)</option>
+            <option value="Anatomy Scan">Anatomy Scan (18-22 weeks)</option>
+            <option value="Ultrasound - Growth Scan">Ultrasound - Growth Scan</option>
+            <option value="Ultrasound - 3D/4D">Ultrasound - 3D/4D</option>
+            <option value="Glucose Screening">Glucose Screening Test</option>
+            <option value="Glucose Tolerance Test">Glucose Tolerance Test (GTT)</option>
+            <option value="Genetic Screening">Genetic Screening</option>
+            <option value="NIPT Testing">NIPT Testing</option>
+            <option value="Group B Strep Test">Group B Strep Test</option>
+          </optgroup>
+          
+          <optgroup label="🤰 PRENATAL - Blood Work">
+            <option value="First Trimester Blood Work">First Trimester Blood Work</option>
+            <option value="Prenatal Blood Test">Prenatal Blood Test</option>
+            <option value="Blood Type & Rh Factor">Blood Type & Rh Factor</option>
+            <option value="Anemia Testing">Anemia Testing</option>
+            <option value="Thyroid Testing">Thyroid Testing</option>
+          </optgroup>
+          
+          <optgroup label="🤰 PRENATAL - Specialized Care">
+            <option value="High-Risk Pregnancy">High-Risk Pregnancy Consultation</option>
+            <option value="Maternal-Fetal Medicine">Maternal-Fetal Medicine</option>
+            <option value="Gestational Diabetes Management">Gestational Diabetes Management</option>
+            <option value="Preeclampsia Monitoring">Preeclampsia Monitoring</option>
+            <option value="Multiple Pregnancy Care">Multiple Pregnancy Care (Twins/Triplets)</option>
+            <option value="Prenatal Nutrition Counseling">Prenatal Nutrition Counseling</option>
+          </optgroup>
+          
+          <optgroup label="🤰 PRENATAL - Concerns & Issues">
+            <option value="Bleeding During Pregnancy">Bleeding During Pregnancy</option>
+            <option value="Decreased Fetal Movement">Decreased Fetal Movement</option>
+            <option value="Pregnancy Complications">Pregnancy Complications</option>
+            <option value="Non-Stress Test">Non-Stress Test (NST)</option>
+            <option value="Biophysical Profile">Biophysical Profile</option>
+          </optgroup>
+          
+          <!-- EMERGENCY & OTHER -->
+          <optgroup label="⚠️ URGENT CARE">
+            <option value="Emergency Visit">Emergency Visit</option>
+            <option value="Urgent Consultation">Urgent Consultation</option>
+            <option value="Same Day Appointment">Same Day Appointment</option>
+          </optgroup>
+          
+          <optgroup label="📋 OTHER">
+            <option value="Pre-Conception Counseling">Pre-Conception Counseling</option>
+            <option value="Second Opinion">Second Opinion</option>
+            <option value="Medical Records Review">Medical Records Review</option>
+            <option value="Consultation - Other">Consultation - Other</option>
+          </optgroup>
+        </select>
+        
+        <!-- PROVIDER DROPDOWN -->
+        <select id="provider" required>
+          <option value="">Select a provider...</option>
+          <option value="Dr. Gerola Simisim">Gerola Simisim, OB/GYN</option>
+          <option value="Nurse Unknown">Chrisyl B. Alejandrino, RN</option>
+        </select>
+        
+        <!-- FOLLOW-UP APPOINTMENT -->
+        <div class="followup-container">
+          <label class="checkbox-label">
+            <input type="checkbox" id="needsFollowup" />
+            <span>Schedule Follow-up Appointment</span>
+          </label>
+          
+          <div id="followupDetails" class="followup-details" style="display: none;">
+            <label for="followupDate" class="floating-label">Follow-up Date & Time</label>
+            <input type="datetime-local" id="followupDate" />
+            <small class="field-help">Recommended follow-up appointment date</small>
+          </div>
+        </div>
+        
+        <!-- STATUS DROPDOWN -->
+        <select id="status">
+          <option value="Walk-in">Walk-in</option>
+          <option value="Online Appointment">Online Appointment</option>
+          <option value="Scheduled">Scheduled</option>
+        </select>
+        
+        <!-- SUBMIT BUTTON -->
+        <button type="submit">
+          <span class="btn-text">Schedule Appointment</span>
+          <span class="btn-spinner" style="display: none;"><i class="fas fa-spinner fa-spin"></i></span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Accept/Decline Modal for Mobile App Appointments -->
+  <div id="approvalModal" class="modal hidden">
+    <div class="modal-content approval-modal">
+      <span id="closeApprovalModal" class="close">&times;</span>
+      <div class="approval-header">
+        <h3>Appointment Request Review</h3>
+      </div>
+      
+      <div class="appointment-details-review" id="appointmentDetailsReview">
+        <!-- Details will be populated by JavaScript -->
+      </div>
+      
+      <div class="approval-actions">
+        <button class="btn-decline" id="declineAppointmentBtn">
+          Decline
+        </button>
+        <button class="btn-accept" id="acceptAppointmentBtn">
+          Accept
+        </button>
+      </div>
+      
+      <div class="approval-notes">
+        <label for="approvalNotes">Notes (Optional):</label>
+        <textarea id="approvalNotes" placeholder="Add notes about this decision..." rows="3"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Appointment Modal -->
+  <div id="endAppointmentModal" class="modal hidden">
+    <div class="modal-content end-appointment-modal">
+      <span id="closeEndModal" class="close">&times;</span>
+      <div class="end-appointment-header">
+        <i class="fas fa-check-circle"></i>
+        <h3>Complete Appointment</h3>
+      </div>
+      
+      <div class="end-appointment-details" id="endAppointmentDetails">
+        <!-- Details will be populated by JavaScript -->
+      </div>
+      
+      <div class="end-appointment-form">
+        <label for="completionNotes">Completion Notes:</label>
+        <textarea id="completionNotes" placeholder="Add notes about this appointment (optional)..." rows="4"></textarea>
+        
+        <div class="completion-options">
+          <label class="checkbox-label">
+            <input type="checkbox" id="sendConfirmation" checked />
+            <span>Send completion confirmation to patient</span>
+          </label>
+        </div>
+      </div>
+      
+      <div class="end-appointment-actions">
+        <button class="btn-cancel" id="cancelEndBtn">
+          Cancel
+        </button>
+        <button class="btn-complete" id="completeAppointmentBtn">
+          <i class="fas fa-check"></i>
+          Mark as Completed
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Authentication Required Modal -->
+  <div class="modal" id="authRequiredModal" style="display: none;">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+      <h2 style="color: var(--heart-red); margin-bottom: 20px;">
+        Authentication Required
+      </h2>
+      <p style="margin-bottom: 20px;">You need to be logged in to access this page.</p>
+      <button onclick="window.location.href='Admin login.html'" style="background: linear-gradient(135deg, var(--heart-red), var(--deep-red)); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+        Go to Login
+      </button>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="Appointments.js"></script>
+</body>
+</html>

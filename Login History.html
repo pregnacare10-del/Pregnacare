@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PregnaCare(Login History)</title>
+    <link rel="icon" href="icons/love 1.png">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- CSS file -->
+    <link rel="stylesheet" href="Login History.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="icons/mother.png" alt="PregnaCare Logo" class="nav-logo">
+                <span class="nav-title">PregnaCare Admin Portal</span>
+            </div>
+            <div class="nav-actions">
+                <button id="refreshBtn" class="nav-btn refresh-btn" title="Refresh Logs">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button id="exportBtn" class="nav-btn export-btn" title="Export Logs">
+                    <i class="fas fa-download"></i>
+                </button>
+                <button id="backBtn" class="nav-btn back-btn" title="Back to Dashboard">
+                    <i class="fas fa-arrow-left"></i> <span>Dashboard</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container" id="mainContainer">
+        <!-- Header Section -->
+        <div class="header-section">
+            <div class="header-content">
+                <h1 class="page-title">
+                    Admin Activity Log History
+                </h1>
+                <p class="page-description">
+                    Track and monitor all administrative activities, account creations, and system access logs
+                </p>
+            </div>
+            
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="totalCreations">0</div>
+                        <div class="stat-label">Account Creations</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="totalLogins">0</div>
+                        <div class="stat-label">Admin Logins</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="totalSecurity">0</div>
+                        <div class="stat-label">Security Events</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-number" id="todayActivity">0</div>
+                        <div class="stat-label">Today's Activity</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="filters-section">
+            <div class="filters-container">
+                <div class="filter-group">
+                    <label for="actionFilter">Action Type</label>
+                    <select id="actionFilter" class="filter-select">
+                        <option value="">All Actions</option>
+                        <option value="CREATE_SUB_ADMIN">Account Creation</option>
+                        <option value="CREATE_ADMIN_ACCOUNT">Admin Creation</option>
+                        <option value="LOGIN">Login</option>
+                        <option value="LOGOUT">Logout</option>
+                        <option value="REGISTRATION_SYSTEM_ACCESS">System Access</option>
+                        <option value="LOG_HISTORY_ACCESS">Log Access</option>
+                        <option value="REGISTRATION_ACCESS_FAILED">Failed Access</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="statusFilter">Status</label>
+                    <select id="statusFilter" class="filter-select">
+                        <option value="">All Status</option>
+                        <option value="success">Success</option>
+                        <option value="failed">Failed</option>
+                        <option value="pending">Pending</option>
+                        <option value="warning">Warning</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label for="dateFromFilter">From Date</label>
+                    <input type="date" id="dateFromFilter" class="filter-input">
+                </div>
+                
+                <div class="filter-group">
+                    <label for="dateToFilter">To Date</label>
+                    <input type="date" id="dateToFilter" class="filter-input">
+                </div>
+                
+                <div class="filter-group">
+                    <label for="adminFilter">Administrator</label>
+                    <select id="adminFilter" class="filter-select">
+                        <option value="">All Admins</option>
+                    </select>
+                </div>
+                
+                <div class="filter-actions">
+                    <button id="applyFiltersBtn" class="btn btn-primary">
+                        <i class="fas fa-filter"></i> Apply Filters
+                    </button>
+                    <button id="clearFiltersBtn" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-container">
+                <div class="search-input-group">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Search by email, name, action, or details...">
+                    <button id="searchBtn" class="search-btn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Log Table Section -->
+        <div class="table-section">
+            <div class="table-header">
+                <h2>Activity Logs</h2>
+                <div class="table-actions">
+                    <div class="pagination-info">
+                        <span id="paginationInfo">Showing 0 of 0 entries</span>
+                    </div>
+                    <div class="table-controls">
+                        <select id="pageSizeSelect" class="page-size-select">
+                            <option value="10">10 per page</option>
+                            <option value="25" selected>25 per page</option>
+                            <option value="50">50 per page</option>
+                            <option value="100">100 per page</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-state">
+                <div class="loading-spinner"></div>
+                <p>Loading admin logs...</p>
+            </div>
+            
+            <!-- Error State -->
+            <div id="errorState" class="error-state" style="display: none;">
+                <div class="error-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3>Failed to Load Logs</h3>
+                <p id="errorMessage">Unable to retrieve admin logs. Please check your connection and try again.</p>
+                <button id="retryBtn" class="btn btn-primary">
+                    <i class="fas fa-redo"></i> Retry
+                </button>
+            </div>
+            
+            <!-- Table Container -->
+            <div id="tableContainer" class="table-container" style="display: none;">
+                <table class="log-table" id="logTable">
+                    <thead>
+                        <tr>
+                            <th class="sortable" data-sort="timestamp">
+                                <span>Date & Time</span>
+                                <i class="fas fa-sort sort-icon"></i>
+                            </th>
+                            <th class="sortable" data-sort="action">
+                                <span>Action</span>
+                                <i class="fas fa-sort sort-icon"></i>
+                            </th>
+                            <th class="sortable" data-sort="performedByName">
+                                <span>Performed By</span>
+                                <i class="fas fa-sort sort-icon"></i>
+                            </th>
+                            <th class="sortable" data-sort="targetName">
+                                <span>Target</span>
+                                <i class="fas fa-sort sort-icon"></i>
+                            </th>
+                            <th class="sortable" data-sort="status">
+                                <span>Status</span>
+                                <i class="fas fa-sort sort-icon"></i>
+                            </th>
+                            <th>Details</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logTableBody">
+                        <!-- Dynamic content will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <div class="empty-icon">
+                    <i class="fas fa-inbox"></i>
+                </div>
+                <h3>No Logs Found</h3>
+                <p>No admin activity logs match your current filters.</p>
+                <button id="clearFiltersEmptyBtn" class="btn btn-secondary">
+                    <i class="fas fa-filter"></i> Clear Filters
+                </button>
+            </div>
+            
+            <!-- Pagination -->
+            <div id="paginationContainer" class="pagination-container" style="display: none;">
+                <div class="pagination">
+                    <button id="prevPageBtn" class="pagination-btn" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <div id="pageNumbers" class="page-numbers">
+                        <!-- Dynamic page numbers will be inserted here -->
+                    </div>
+                    <button id="nextPageBtn" class="pagination-btn" disabled>
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Log Details Modal -->
+    <div id="logDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> Log Details</h3>
+                <button class="modal-close" id="closeModalBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button id="closeModalFooterBtn" class="btn btn-secondary">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+    
+    <!-- JavaScript file -->
+    <script src="Login History.js"></script>
+</body>
+</html>

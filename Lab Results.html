@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PregnaCare(Lab Results)</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    crossorigin="anonymous"/>
+  <link rel="stylesheet" href="Lab Results.css">
+  <link rel="icon" href="icons/love 1.png">
+  <link rel="preconnect" href="google-services.json">
+</head>
+<body>
+  <!-- Mobile Menu Toggle -->
+  <button class="mobile-menu-toggle" id="mobileMenuToggle">
+    <i class="fas fa-bars"></i>
+  </button>
+
+  <div class="sidebar" id="sidebar">
+    <div class="logo">
+      <div class="gradient-logo">
+        <img src="icons/mother.png" alt="PregnaCare Logo" />
+      </div>
+      <h2><span class="heart">Pregna</span><span class="care">Care</span></h2>
+      <p class="role">Maternity Clinic Admin</p>
+    </div>
+    <ul class="nav">
+      <li><a href="DashBoard.html"><i class="fa-solid fa-chart-column"></i>Dashboard</a></li>
+      <li><a href="Patients.html"><i class="fa-solid fa-circle-user"></i>Patients</a></li>
+      <li><a href="Appointments.html"><i class="fa-solid fa-calendar-days"></i>Appointments</a></li>
+      <li><a href="Lab Results.html" class="active"><i class="fa-solid fa-flask"></i>Lab Results</a></li>
+      <li><a href="Prescriptions.html"><i class="fa-solid fa-pills"></i>Prescriptions</a></li>
+      <li><a href="Reports.html"><i class="fa-solid fa-chart-bar"></i>Reports</a></li>
+    </ul>
+
+    <!-- User Profile Section with Authentication -->
+    <div class="user" id="userProfile">
+      <div class="circle">US</div>
+      <div>
+        <p>Loading...</p>
+        <span>Admin</span>
+      </div>
+    </div>
+
+    <!-- Dropdown Menu - Only Logout -->
+    <div class="dropdown-menu" id="sidebarDropdown">
+      <a href="#" class="logout" id="logoutBtn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </a>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="search-header">
+      <div class="search">
+        <input type="text" id="searchInput" placeholder="Search patients, appointments..." />
+        <div class="icons">
+          <!-- Notification Icon -->
+          <span class="icon-dropdown-group">
+            <button type="button" class="icon-btn" id="notifIcon">
+              <i class="fa-solid fa-bell"></i>
+              <span class="notification-badge" id="notifBadge">0</span>
+            </button>
+            <div class="dropdown" id="notifDropdown">
+              <div class="notif-header">
+                <p><strong>Notifications</strong></p>
+                <button onclick="markAllNotificationsRead()" class="mark-all-read-btn">
+                  <i class="fas fa-check-double"></i> Mark all read
+                </button>
+              </div>
+              <ul id="notificationsList">
+                <li>Loading notifications...</li>
+              </ul>
+              <div class="notification-actions">
+                <button type="button" class="btn-link" id="markAllRead">Mark all as read</button>
+                <button type="button" class="btn-link" id="viewAllNotifications">View all</button>
+              </div>
+            </div>
+          </span>
+          
+          <!-- Help Icon -->
+          <span class="icon-dropdown-group">
+            <button type="button" class="icon-btn" id="helpIcon">
+              <i class="fa-solid fa-circle-question"></i>
+            </button>
+            <div class="dropdown help-dropdown" id="helpDropdown">
+              <p><strong>Lab Results Help</strong></p>
+              <ul>
+                <li class="help-item" data-action="quick-guide">
+                  <i class="fas fa-book-open"></i> Quick Start Guide
+                </li>
+                <li class="help-item" data-action="add-result">
+                  <i class="fas fa-plus"></i> How to Add Lab Results
+                </li>
+                <li class="help-item" data-action="import-guide">
+                  <i class="fas fa-upload"></i> Import Results Guide
+                </li>
+                <li class="help-item" data-action="status-guide">
+                  <i class="fas fa-info-circle"></i> Understanding Status Types
+                </li>
+                <li class="help-item" data-action="abnormal-results">
+                  <i class="fas fa-exclamation-triangle"></i> Managing Abnormal Results
+                </li>
+                <li class="help-item" data-action="search-tips">
+                  <i class="fas fa-search"></i> Search & Filter Tips
+                </li>
+                <li class="help-item" data-action="history-guide">
+                  <i class="fas fa-history"></i> Using History Feature
+                </li>
+                <li class="help-item" data-action="troubleshooting">
+                  <i class="fas fa-wrench"></i> Troubleshooting
+                </li>
+                <li class="help-item" data-action="contact-support">
+                  <i class="fas fa-headset"></i> Contact Support
+                </li>
+              </ul>
+            </div>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-header">
+      <div>
+        <h2>Laboratory Results</h2>
+        <p>View and manage patient lab results</p>
+      </div>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="filter-btn gynecology-btn" onclick="filterResultsByType('Gynecology')">
+          <i class="fas fa-female"></i>
+          Gynecology
+        </button>
+        <button class="filter-btn prenatal-btn" onclick="filterResultsByType('Prenatal')">
+          <i class="fas fa-baby"></i>
+          Prenatal
+        </button>
+        <button class="view-btn" onclick="showHistoryModal()">
+          <i class="fas fa-history"></i>
+          History
+        </button>
+        <button class="add-btn-1" id="importLabBtn">
+          <i class="fas fa-upload"></i>
+          Import
+        </button>
+        <input type="file" id="directImportInput" accept=".csv,.xlsx,.xls,.jpg,.jpeg,.png,.pdf" style="display: none;" />
+        <button class="add-btn" id="addLabBtn">
+          <i class="fas fa-plus"></i>
+          Add Lab Result
+        </button>
+      </div>
+    </div>
+
+    <!-- Alert for abnormal results - Initially hidden -->
+    <div class="alert" id="abnormalAlert" style="display: none;">
+      <div class="alert-content">
+        <i class="fas fa-exclamation-triangle alert-icon"></i>
+        <span class="alert-text">Urgent Attention Required</span>
+        <span id="abnormalCount">0 abnormal lab results require immediate review</span>
+      </div>
+      <a href="#abnormal-results" class="alert-link" id="viewAbnormalBtn">View abnormal results</a>
+    </div>
+
+    <!-- No data message - Initially hidden -->
+    <div id="noDataMessage" class="no-data" style="display: none; text-align: center; padding: 40px;">
+      <i class="fas fa-flask" style="font-size: 48px; color: #ccc; margin-bottom: 20px;"></i>
+      <h3 style="color: #666; margin-bottom: 10px;">No Lab Results Found</h3>
+      <p style="color: #999;">Click "Add Lab Result" to add the first lab result.</p>
+    </div>
+
+    <div class="table-container" id="tableContainer">
+      <table class="table" id="labTable">
+        <thead>
+          <tr>
+            <th>Patient ID</th>
+            <th>Patient Name</th>
+            <th>Patient Type</th>
+            <th>Test</th>
+            <th>Results</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="labTableBody">
+          <tr class="loading-row">
+            <td colspan="8">
+              <div class="loading-spinner"></div>
+              <p class="loading-text">Loading lab results...</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Add Lab Result Modal (UPDATED - Status: Pending Only) -->
+  <!-- Add Lab Result Modal -->
+  <div id="addLabModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('addLabModal')">&times;</span>
+      <h2 id="modalTitle">Add Lab Result</h2>
+      <form id="addLabForm">
+        <div class="form-group">
+          <label for="patientSelect">Patient <span style="color: var(--heart-red);">*</span></label>
+          <div class="searchable-select" id="patientSelectContainer">
+            <input 
+              type="text" 
+              id="patientSelect" 
+              placeholder="Type to search patient..." 
+              autocomplete="off"
+              required
+            />
+            <i class="fas fa-search search-icon"></i>
+            <div class="patient-dropdown" id="patientDropdown"></div>
+          </div>
+          <input type="hidden" id="selectedPatientId" required />
+        </div>
+
+        <div class="form-group">
+          <label for="patientType">Patient Type <span style="color: var(--heart-red);">*</span></label>
+          <select id="patientType" name="patientType" required>
+            <option value="">Select patient type</option>
+            <option value="Gynecology">Gynecology</option>
+            <option value="Prenatal">Prenatal</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="testType">Test Type <span style="color: var(--heart-red);">*</span></label>
+          <select id="testType" name="test" required>
+            <option value="">Select test type</option>
+            <optgroup label="Prenatal Tests">
+              <option value="Glucose Screening">Glucose Screening</option>
+              <option value="Genetic Screening">Genetic Screening</option>
+              <option value="Group B Strep">Group B Strep</option>
+              <option value="RH Factor">RH Factor Test</option>
+              <option value="NIPT">Non-Invasive Prenatal Testing (NIPT)</option>
+              <option value="Amniocentesis">Amniocentesis</option>
+              <option value="AFP">Alpha-fetoprotein (AFP)</option>
+            </optgroup>
+            <optgroup label="Gynecological Tests">
+              <option value="Pap Smear">Pap Smear</option>
+              <option value="HPV Test">HPV Test</option>
+              <option value="STD Screening">STD Screening</option>
+              <option value="Hormone Panel">Hormone Panel</option>
+              <option value="Pregnancy Test">Pregnancy Test</option>
+            </optgroup>
+            <optgroup label="General Lab Tests">
+              <option value="CBC">Complete Blood Count (CBC)</option>
+              <option value="Urinalysis">Urinalysis</option>
+              <option value="Blood Type">Blood Type & Rh</option>
+              <option value="Thyroid Function">Thyroid Function Tests</option>
+              <option value="Liver Panel">Liver Function Panel</option>
+              <option value="Kidney Function">Kidney Function Tests</option>
+            </optgroup>
+          </select>
+        </div>
+
+        <!-- STATUS FIELD - HIDDEN, ALWAYS SET TO PENDING -->
+        <input type="hidden" id="status" value="pending" />
+        
+        <!-- Visual indicator that status is Pending -->
+        <div class="form-group">
+          <label>Status:</label>
+          <div style="padding: 12px; background: #fff3e0; border: 2px solid #ff9800; border-radius: 8px; display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-clock" style="color: #ff9800; font-size: 20px;"></i>
+            <div>
+              <strong style="color: #e65100;">Pending</strong>
+              <p style="margin: 5px 0 0 0; font-size: 13px; color: #666;">All new lab results are automatically set to pending status</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="results">Results <span style="color: var(--heart-red);">*</span></label>
+          <textarea id="results" name="results" rows="4" placeholder="Enter test results and values..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="testDate">Test Date <span style="color: var(--heart-red);">*</span></label>
+          <input type="date" id="testDate" name="date" required />
+        </div>
+
+        <div class="form-group">
+          <label for="doctorNotes">Doctor's Notes</label>
+          <textarea id="doctorNotes" name="notes" rows="3" placeholder="Additional notes or observations..."></textarea>
+        </div>
+
+        <div class="form-buttons">
+          <button type="button" class="form-btn secondary" onclick="closeModal('addLabModal')">Cancel</button>
+          <button type="submit" class="form-btn primary" id="submitBtn">
+            <i class="fas fa-save"></i>
+            <span id="submitBtnText">Save Result</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Import Lab Results Modal - Modern File Importer with Form Fields -->
+  <div id="importModal" class="modal">
+    <div class="modal-content import-modal-content">
+      <span class="close" onclick="closeModal('importModal')">&times;</span>
+      
+      <!-- Header -->
+      <div class="import-header">
+        <h2><i class="fas fa-upload"></i> Import Lab Results</h2>
+        <p class="import-subtitle">Upload lab result files and associate them with patients</p>
+      </div>
+
+      <!-- Error Messages Container -->
+      <div id="importErrorContainer" class="import-error-container"></div>
+
+      <form id="importLabForm">
+        <!-- Patient ID Search Field -->
+        <div class="form-group" style="padding: 0 30px;">
+          <label for="importPatientId">
+            <i class="fas fa-user-injured"></i> Patient ID Search: *
+          </label>
+          <div style="position: relative;">
+            <input 
+              type="text" 
+              id="importPatientId" 
+              placeholder="Enter or search Patient ID (e.g., PT001)" 
+              required 
+              autocomplete="off"
+              style="padding-right: 40px;"
+            />
+            <i class="fas fa-search" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #999;"></i>
+          </div>
+          <!-- Patient suggestions dropdown -->
+          <div id="patientSuggestions" style="display: none; position: absolute; background: white; border: 2px solid #ee5968; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-height: 200px; overflow-y: auto; z-index: 10; margin-top: 5px; width: calc(100% - 60px);">
+            <!-- Suggestions will be populated here -->
+          </div>
+        </div>
+
+        <!-- Status Field -->
+        <div class="form-group" style="padding: 0 30px;">
+          <label for="importStatus">
+            <i class="fas fa-info-circle"></i> Status: *
+          </label>
+          <select id="importStatus" required>
+            <option value="">Select Status</option>
+            <option value="pending">Pending</option>
+            <option value="normal">Normal</option>
+            <option value="abnormal">Abnormal</option>
+            <option value="reviewed">Reviewed</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+
+        <!-- Ordering Doctor Field -->
+        <div class="form-group" style="padding: 0 30px;">
+          <label for="importDoctor">
+            <i class="fas fa-user-md"></i> Ordering Doctor: (Optional)
+          </label>
+          <input 
+            type="text" 
+            id="importDoctor" 
+            placeholder="Enter doctor's name (e.g., Dr. Smith)"
+          />
+        </div>
+
+        <!-- Additional Notes Field -->
+        <div class="form-group" style="padding: 0 30px;">
+          <label for="importNotes">
+            <i class="fas fa-notes-medical"></i> Additional Notes: (Optional)
+          </label>
+          <textarea 
+            id="importNotes" 
+            rows="3" 
+            placeholder="Enter any additional notes about the lab results..."
+          ></textarea>
+        </div>
+
+        <!-- File Upload Section Label -->
+        <div class="form-group" style="padding: 0 30px 0;">
+          <label>
+            <i class="fas fa-file-upload"></i> Upload Files: *
+          </label>
+          <p style="font-size: 13px; color: #888; margin: 5px 0 0;">Supported formats: CSV, JPG, PNG, PDF, TIFF</p>
+        </div>
+
+        <!-- Drag and Drop Zone -->
+        <div id="dropZone" class="drop-zone">
+          <input 
+            type="file" 
+            id="fileInput" 
+            multiple 
+            accept=".csv,.jpg,.jpeg,.png,.pdf,.tiff,.tif,text/csv,application/pdf,image/jpeg,image/png,image/tiff"
+            class="drop-zone-input"
+          />
+          <div class="drop-zone-content">
+            <div class="drop-zone-icon">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </div>
+            <p class="drop-zone-text">Drag and drop files here</p>
+            <p class="drop-zone-subtext">or click to browse</p>
+          </div>
+        </div>
+
+        <!-- Selected Files List -->
+        <div id="selectedFilesSection" class="selected-files-section" style="display: none;">
+          <div class="files-header">
+            <span id="fileCount" class="file-count">0 files selected</span>
+            <button type="button" class="clear-all-btn" onclick="clearAllFiles()">Clear all</button>
+          </div>
+          <div id="filesList" class="files-list">
+            <!-- Files will be dynamically added here -->
+          </div>
+        </div>
+
+        <!-- Progress Section -->
+        <div id="importProgressSection" class="import-progress-section" style="display: none;">
+          <div class="progress-header">
+            <i class="fas fa-spinner fa-spin"></i>
+            <span>Importing files...</span>
+          </div>
+          <div class="progress-bar-container">
+            <div id="importProgressBar" class="progress-bar-fill"></div>
+          </div>
+          <p id="importProgressText" class="progress-text">Processing...</p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="form-buttons" style="padding: 20px 30px 24px;">
+          <button type="button" class="form-btn secondary" onclick="closeModal('importModal')">Cancel</button>
+          <button type="button" class="form-btn primary" id="importFilesBtn" onclick="importSelectedFiles()" style="background: linear-gradient(135deg, var(--heart-red), var(--deep-red));">
+            <i class="fas fa-upload"></i>
+            <span id="importBtnText">Import Results</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Help Content Modal -->
+  <div id="helpContentModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('helpContentModal')">&times;</span>
+      <h2 id="helpModalTitle">Help</h2>
+      <div id="helpModalContent">
+        <!-- Help content will be populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div id="confirmModal" class="modal">
+    <div class="modal-content" style="max-width: 400px;">
+      <span class="close" onclick="closeModal('confirmModal')">&times;</span>
+      <h2>Confirm Action</h2>
+      <p id="confirmMessage">Are you sure you want to perform this action?</p>
+      <div class="form-buttons">
+        <button type="button" class="form-btn secondary" onclick="closeModal('confirmModal')">Cancel</button>
+        <button type="button" class="form-btn primary" id="confirmBtn" style="background: #dc3545;">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Processing Modal -->
+  <div id="imageProcessingModal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+      <span class="close" onclick="closeModal('imageProcessingModal')">&times;</span>
+      <h2><i class="fas fa-magic"></i> Processing Lab Result Image</h2>
+      
+      <div style="text-align: center; padding: 20px;">
+        <div class="loading-spinner" style="margin: 20px auto;"></div>
+        <p id="processingStatus" style="margin: 20px 0; color: #666;">
+          Analyzing image and extracting text...
+        </p>
+        <div id="processingSteps" style="text-align: left; margin: 20px 0;">
+          <div class="processing-step" id="step1">
+            <i class="fas fa-circle-notch fa-spin" style="color: #2196f3;"></i>
+            <span>Enhancing image quality...</span>
+          </div>
+          <div class="processing-step" id="step2" style="color: #ccc;">
+            <i class="fas fa-circle" style="color: #ccc;"></i>
+            <span>Extracting text content...</span>
+          </div>
+          <div class="processing-step" id="step3" style="color: #ccc;">
+            <i class="fas fa-circle" style="color: #ccc;"></i>
+            <span>Identifying patient information...</span>
+          </div>
+          <div class="processing-step" id="step4" style="color: #ccc;">
+            <i class="fas fa-circle" style="color: #ccc;"></i>
+            <span>Parsing lab results...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Authentication Required Modal -->
+  <div class="modal" id="authRequiredModal" style="display: none;">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+      <h2 style="color: var(--heart-red); margin-bottom: 20px;">
+        <i class="fas fa-lock"></i> Authentication Required
+      </h2>
+      <p style="margin-bottom: 20px;">You need to be logged in to access this page.</p>
+      <button onclick="window.location.href='Admin login.html'" style="background: linear-gradient(135deg, var(--heart-red), var(--deep-red)); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+        <i class="fas fa-sign-in-alt"></i> Go to Login
+      </button>
+    </div>
+  </div>
+
+  <!-- Success/Error Messages Container -->
+  <div id="messagesContainer" style="position: fixed; top: 20px; right: 20px; z-index: 1001;">
+    <!-- Messages will be inserted here dynamically -->
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="Lab Results.js"></script>
+</body>
+</html>

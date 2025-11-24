@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PregnaCare(Referral)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous"/>
+  <link rel="icon" href="icons/love 1.png">
+<style>
+    :root {
+      --heart-red: #fd2841;
+      --deep-red: #d6455f;
+      --light-pink: #f8bbc7;
+      --pale-pink: #fce4ec;
+      --gray-text: #888888;
+      --dark-gray: #333333;
+      --light-border: #e0e0e0;
+      --white: #ffffff;
+      --record-red: #c47b7f;
+      --record-cream: #f5ebe8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #fce9ee 0%, #fdd5e0 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      overflow: hidden;
+    }
+
+    /* Header Styles */
+    .header {
+      background: linear-gradient(135deg, var(--heart-red), var(--deep-red));
+      color: white;
+      padding: 30px 40px;
+      border-bottom: 5px solid var(--record-red);
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .gradient-logo {
+      width: 65px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgb(250, 121, 121);
+      aspect-ratio: 1.1;
+      --_m: radial-gradient(#eca6a6 69%,#f8434300 70%) 84.5%/50%;
+      -webkit-mask-box-image: var(--_m);
+      mask-border: var(--_m);
+      clip-path: polygon(-41% 0,50% 91%, 141% 0);
+      flex-shrink: 0;
+    }
+
+    .gradient-logo img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+
+    .clinic-info h1 {
+      font-size: 32px;
+      margin-bottom: 5px;
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+
+    .pregna {
+      color: white;
+    }
+
+    .care {
+      font-weight: 600;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+
+    .contact-info {
+      font-size: 12px;
+      opacity: 0.85;
+    }
+
+    .contact-info i {
+      margin-right: 5px;
+      margin-left: 15px;
+    }
+
+    .contact-info i:first-child {
+      margin-left: 0;
+    }
+
+    .form-title {
+      text-align: center;
+      border-top: 2px solid rgba(255, 255, 255, 0.3);
+      padding-top: 20px;
+    }
+
+    .form-title h2 {
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      margin-bottom: 5px;
+    }
+
+    .form-subtitle {
+      font-size: 14px;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    /* Form Styles */
+    .referral-form {
+      padding: 40px;
+    }
+
+    .section-header {
+      background: linear-gradient(135deg, var(--pale-pink), var(--light-pink));
+      padding: 15px 20px;
+      margin: 30px -40px 25px -40px;
+      border-left: 5px solid var(--heart-red);
+    }
+
+    .section-header:first-child {
+      margin-top: 0;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--deep-red);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title i {
+      font-size: 20px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark-gray);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .required {
+      color: var(--heart-red);
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="date"],
+    input[type="time"],
+    select,
+    textarea {
+      padding: 12px 15px;
+      border: 2px solid var(--light-border);
+      border-radius: 8px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--heart-red);
+      box-shadow: 0 0 0 3px rgba(250, 49, 74, 0.1);
+    }
+
+    input:hover,
+    select:hover,
+    textarea:hover {
+      border-color: var(--deep-red);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    select {
+      cursor: pointer;
+      background: white;
+    }
+
+    /* Checkbox styling */
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      accent-color: var(--heart-red);
+    }
+
+    .form-group label:has(input[type="checkbox"]) {
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* Clinical Information Section */
+    .clinical-info-section {
+      background: rgba(252, 228, 236, 0.3);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* Signature Section */
+    .signature-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin: 40px 0;
+      padding: 30px;
+      background: linear-gradient(135deg, var(--pale-pink), white);
+      border-radius: 12px;
+      border: 2px dashed var(--light-pink);
+    }
+
+    .signature-box {
+      text-align: center;
+    }
+
+    .signature-line {
+      width: 100%;
+      border-bottom: 2px solid var(--dark-gray);
+      margin: 60px 0 10px 0;
+    }
+
+    .signature-label {
+      font-weight: 600;
+      color: var(--dark-gray);
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .signature-date {
+      font-size: 12px;
+      color: var(--gray-text);
+      font-style: italic;
+    }
+
+    .clinic-stamp {
+      text-align: center;
+    }
+
+    .stamp-circle {
+      width: 150px;
+      height: 150px;
+      border: 3px dashed var(--deep-red);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px;
+      color: var(--deep-red);
+    }
+
+    .stamp-circle i {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .stamp-circle p {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .stamp-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark-gray);
+    }
+
+    /* Form Actions */
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      padding: 30px 0;
+      border-top: 2px solid var(--light-border);
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--heart-red), var(--deep-red));
+      color: white;
+      box-shadow: 0 4px 15px rgba(250, 49, 74, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(250, 49, 74, 0.4);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--heart-red);
+      border: 2px solid var(--heart-red);
+    }
+
+    .btn-secondary:hover {
+      background: var(--pale-pink);
+      transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer {
+      background: linear-gradient(135deg, var(--pale-pink), white);
+      padding: 20px 40px;
+      text-align: center;
+      color: var(--gray-text);
+      font-size: 13px;
+      border-top: 3px solid var(--light-pink);
+    }
+
+    .footer i {
+      color: var(--heart-red);
+      margin-right: 5px;
+    }
+
+    /* Preview Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      overflow-y: auto;
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 3% auto;
+      padding: 40px;
+      border-radius: 15px;
+      width: 80%;
+      max-width: 900px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+      animation: slideDown 0.3s ease;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 3px solid var(--light-pink);
+    }
+
+    .modal-header h2 {
+      color: var(--deep-red);
+      font-size: 24px;
+    }
+
+    .close-modal {
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--gray-text);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      line-height: 1;
+    }
+
+    .close-modal:hover {
+      color: var(--heart-red);
+      transform: rotate(90deg);
+    }
+
+    .preview-content {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .preview-content h3 {
+      color: var(--deep-red);
+      margin: 25px 0 15px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--pale-pink);
+      font-size: 18px;
+    }
+
+    .preview-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 15px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--light-border);
+    }
+
+    .preview-label {
+      font-weight: 600;
+      color: var(--dark-gray);
+      font-size: 14px;
+    }
+
+    .preview-value {
+      color: var(--gray-text);
+      font-size: 14px;
+    }
+
+    /* Success Message */
+    .success-message {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+      display: none;
+      z-index: 1001;
+      animation: slideIn 0.3s ease;
+    }
+
+    /* Animations */
+    @keyframes slideDown {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+
+    /* Back Button */
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: white;
+      color: var(--heart-red);
+      border: 2px solid var(--heart-red);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+    }
+
+    .back-button:hover {
+      background: var(--heart-red);
+      color: white;
+      transform: translateX(-5px);
+    }
+
+    /* Print Styles */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+
+      .container {
+        box-shadow: none;
+        max-width: 100%;
+      }
+
+      .form-actions,
+      .btn-primary,
+      .btn-secondary,
+      .back-button {
+        display: none !important;
+      }
+
+      .header {
+        background: white !important;
+        color: black !important;
+        border-bottom: 3px solid black;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .section-header {
+        background: #f5f5f5 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .signature-section {
+        page-break-inside: avoid;
+      }
+
+      input,
+      select,
+      textarea {
+        border: 1px solid #000 !important;
+        background: white !important;
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+
+      .header {
+        padding: 20px;
+      }
+
+      .logo-section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .referral-form {
+        padding: 20px;
+      }
+
+      .section-header {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding: 12px 15px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+
+      .signature-section {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 20px;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .modal-content {
+        width: 95%;
+        padding: 20px;
+        margin: 5% auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Back Button -->
+  <button class="back-button" onclick="window.location.href='Dashboard.html'">
+    <i class="fas fa-arrow-left"></i>
+    Back to Dashboard
+  </button>
+
+  <!-- Success Message -->
+  <div id="successMessage" class="success-message">
+    <i class="fas fa-check-circle"></i>
+    <span id="successText">Referral saved successfully!</span>
+  </div>
+
+  <div class="container">
+    <!-- Header Section -->
+    <div class="header">
+      <div class="logo-section">
+        <div class="gradient-logo">
+          <img src="icons/mother.png" alt="PregnaCare Logo" />
+        </div>
+        <div class="clinic-info">
+          <h1><span class="pregna">Pregna</span><span class="care">Care</span></h1>
+          <p class="subtitle">Gerola Simisim Maternity Clinic</p>
+          <p class="contact-info">
+            <i class="fas fa-phone"></i> +63 9089908558 | 
+            <i class="fas fa-envelope"></i> pregnacare@clinic.com
+          </p>
+        </div>
+      </div>
+      <div class="form-title">
+        <h2>MATERNAL REFERRAL FORM</h2>
+        <p class="form-subtitle">For Hospital Delivery</p>
+      </div>
+    </div>
+
+    <!-- Form Content -->
+    <form id="referralForm" class="referral-form">
+      <!-- Date and Urgency Section -->
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fas fa-calendar-alt"></i>
+          Referral Information
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="referralDate">Date of Referral <span class="required">*</span></label>
+          <input type="date" id="referralDate" name="referralDate" required>
+        </div>
+        <div class="form-group">
+          <label for="referralTime">Time <span class="required">*</span></label>
+          <input type="time" id="referralTime" name="referralTime" required>
+        </div>
+        <div class="form-group">
+          <label for="urgencyLevel">Urgency Level <span class="required">*</span></label>
+          <select id="urgencyLevel" name="urgencyLevel" required>
+            <option value="">Select urgency</option>
+            <option value="routine">Routine</option>
+            <option value="urgent">Urgent</option>
+            <option value="emergency">Emergency</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Patient Information Section -->
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fas fa-user"></i>
+          Patient Information
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="patientName">Full Name <span class="required">*</span></label>
+          <input type="text" id="patientName" name="patientName" placeholder="Last Name, First Name, Middle Name" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="patientAge">Age <span class="required">*</span></label>
+          <input type="number" id="patientAge" name="patientAge" min="15" max="60" required>
+        </div>
+        <div class="form-group">
+          <label for="patientDOB">Date of Birth <span class="required">*</span></label>
+          <input type="date" id="patientDOB" name="patientDOB" required>
+        </div>
+        <div class="form-group">
+          <label for="civilStatus">Civil Status <span class="required">*</span></label>
+          <select id="civilStatus" name="civilStatus" required>
+            <option value="">Select status</option>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+            <option value="widowed">Widowed</option>
+            <option value="separated">Separated</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="patientAddress">Complete Address <span class="required">*</span></label>
+          <textarea id="patientAddress" name="patientAddress" rows="2" placeholder="Street, Barangay, City/Municipality, Province" required></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="contactNumber">Contact Number <span class="required">*</span></label>
+          <input type="tel" id="contactNumber" name="contactNumber" placeholder="+63 XXX XXX XXXX" required>
+        </div>
+        <div class="form-group">
+          <label for="emergencyContact">Emergency Contact <span class="required">*</span></label>
+          <input type="tel" id="emergencyContact" name="emergencyContact" placeholder="+63 XXX XXX XXXX" required>
+        </div>
+        <div class="form-group">
+          <label for="emergencyName">Emergency Contact Name <span class="required">*</span></label>
+          <input type="text" id="emergencyName" name="emergencyName" placeholder="Full name" required>
+        </div>
+      </div>
+
+      <!-- Obstetric Information -->
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fas fa-baby"></i>
+          Obstetric Information
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="lmp">Last Menstrual Period (LMP) <span class="required">*</span></label>
+          <input type="date" id="lmp" name="lmp" required>
+        </div>
+        <div class="form-group">
+          <label for="edc">Expected Date of Confinement (EDC) <span class="required">*</span></label>
+          <input type="date" id="edc" name="edc" required>
+        </div>
+        <div class="form-group">
+          <label for="ageOfGestation">Age of Gestation (weeks) <span class="required">*</span></label>
+          <input type="number" id="ageOfGestation" name="ageOfGestation" min="1" max="42" placeholder="Weeks" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="gravida">Gravida (G) <span class="required">*</span></label>
+          <input type="number" id="gravida" name="gravida" min="1" placeholder="Total pregnancies" required>
+        </div>
+        <div class="form-group">
+          <label for="para">Para (P) <span class="required">*</span></label>
+          <input type="number" id="para" name="para" min="0" placeholder="Live births" required>
+        </div>
+        <div class="form-group">
+          <label for="abortion">Abortion (A)</label>
+          <input type="number" id="abortion" name="abortion" min="0" value="0" placeholder="Miscarriages">
+        </div>
+      </div>
+
+      <!-- Prenatal History -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="prenatalVisits">Number of Prenatal Visits <span class="required">*</span></label>
+          <input type="number" id="prenatalVisits" name="prenatalVisits" min="0" placeholder="Total visits" required>
+        </div>
+        <div class="form-group">
+          <label for="bloodType">Blood Type <span class="required">*</span></label>
+          <select id="bloodType" name="bloodType" required>
+            <option value="">Select blood type</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="rhFactor">Rh Factor <span class="required">*</span></label>
+          <select id="rhFactor" name="rhFactor" required>
+            <option value="">Select</option>
+            <option value="positive">Positive (+)</option>
+            <option value="negative">Negative (-)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Clinical Information -->
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fas fa-stethoscope"></i>
+          Clinical Information
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="reasonForReferral">Reason for Referral <span class="required">*</span></label>
+          <textarea id="reasonForReferral" name="reasonForReferral" rows="3" placeholder="Describe the primary reason for referring this patient..." required></textarea>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="presentCondition">Present Condition <span class="required">*</span></label>
+          <textarea id="presentCondition" name="presentCondition" rows="3" placeholder="Current medical condition, symptoms, complaints..." required></textarea>
+        </div>
+      </div>
+
+      <div class="clinical-info-section">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="bp">Blood Pressure (mmHg) <span class="required">*</span></label>
+            <input type="text" id="bp" name="bp" placeholder="120/80" required>
+          </div>
+          <div class="form-group">
+            <label for="temperature">Temperature (°C) <span class="required">*</span></label>
+            <input type="number" id="temperature" name="temperature" step="0.1" min="35" max="42" placeholder="37.0" required>
+          </div>
+          <div class="form-group">
+            <label for="pulseRate">Pulse Rate (bpm) <span class="required">*</span></label>
+            <input type="number" id="pulseRate" name="pulseRate" min="40" max="200" placeholder="72" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="respiratoryRate">Respiratory Rate (per min)</label>
+            <input type="number" id="respiratoryRate" name="respiratoryRate" min="8" max="40" placeholder="16">
+          </div>
+          <div class="form-group">
+            <label for="weight">Weight (kg)</label>
+            <input type="number" id="weight" name="weight" step="0.1" min="30" max="200" placeholder="65.0">
+          </div>
+          <div class="form-group">
+            <label for="height">Height (cm)</label>
+            <input type="number" id="height" name="height" min="100" max="220" placeholder="160">
+          </div>
+        </div>
+      </div>
+
+      <!-- Laboratory Results -->
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fas fa-flask"></i>
+          Laboratory Results (if available)
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="hbsag" name="hbsag">
+            HBsAg Test Done
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="hiv" name="hiv">
+            HIV Test Done
+          </label>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" id="vdrl" name="vdrl">
+            VDRL/RPR Test Done
+          </label>
+        </div>
+      </div>
+
+      <!-- Referring Hospital Section -->
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fas fa-hospital"></i>
+          Referring to Hospital
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="referralHospital">Hospital Name <span class="required">*</span></label>
+          <input type="text" id="referralHospital" name="referralHospital" placeholder="Name of receiving hospital" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="hospitalAddress">Hospital Address <span class="required">*</span></label>
+          <input type="text" id="hospitalAddress" name="hospitalAddress" placeholder="Complete hospital address" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="hospitalContact">Hospital Contact Number</label>
+          <input type="tel" id="hospitalContact" name="hospitalContact" placeholder="+63 XXX XXX XXXX">
+        </div>
+        <div class="form-group">
+          <label for="receivingDoctor">Receiving Doctor (if known)</label>
+          <input type="text" id="receivingDoctor" name="receivingDoctor" placeholder="Dr. Name">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="transportMode">Mode of Transport <span class="required">*</span></label>
+          <select id="transportMode" name="transportMode" required>
+            <option value="">Select transport</option>
+            <option value="ambulance">Ambulance</option>
+            <option value="private">Private Vehicle</option>
+            <option value="public">Public Transport</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Referring Physician Section -->
+      <div class="section-header">
+        <div class="section-title">
+          <i class="fas fa-user-md"></i>
+          Referring Physician Information
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="referringDoctor">Physician Name <span class="required">*</span></label>
+          <input type="text" id="referringDoctor" name="referringDoctor" placeholder="Dr. Full Name" required>
+        </div>
+        <div class="form-group">
+          <label for="doctorLicense">License Number <span class="required">*</span></label>
+          <input type="text" id="doctorLicense" name="doctorLicense" placeholder="PRC License No." required>
+        </div>
+        <div class="form-group">
+          <label for="doctorContact">Contact Number <span class="required">*</span></label>
+          <input type="tel" id="doctorContact" name="doctorContact" placeholder="+63 XXX XXX XXXX" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group full-width">
+          <label for="additionalNotes">Additional Notes/Instructions</label>
+          <textarea id="additionalNotes" name="additionalNotes" rows="3" placeholder="Any other relevant information for the receiving hospital"></textarea>
+        </div>
+      </div>
+
+      <!-- Signature Section -->
+      <div class="signature-section">
+        <div class="signature-box">
+          <div class="signature-line"></div>
+          <p class="signature-label">Referring Physician Signature</p>
+          <p class="signature-date" id="signatureDate"></p>
+        </div>
+        <div class="clinic-stamp">
+          <div class="stamp-circle">
+            <i class="fas fa-stamp"></i>
+            <p>PregnaCare</p>
+            <p>Maternity Clinic</p>
+          </div>
+          <p class="stamp-label">Official Clinic Seal</p>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" onclick="resetForm()">
+          <i class="fas fa-redo"></i>
+          Clear Form
+        </button>
+        <button type="button" class="btn-secondary" onclick="previewForm()">
+          <i class="fas fa-eye"></i>
+          Preview
+        </button>
+        <button type="button" class="btn-primary" onclick="printForm()">
+          <i class="fas fa-print"></i>
+          Print Form
+        </button>
+        <button type="submit" class="btn-primary">
+          <i class="fas fa-save"></i>
+          Save & Generate
+        </button>
+      </div>
+    </form>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p><i class="fas fa-info-circle"></i> This is a confidential medical document. Please handle with care.</p>
+      <p style="margin-top: 10px;">For inquiries, contact: +63 9089908558</p>
+    </div>
+  </div>
+
+  <!-- Preview Modal -->
+  <div id="previewModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-file-alt"></i> Referral Form Preview</h2>
+        <span class="close-modal" onclick="closePreview()">&times;</span>
+      </div>
+      <div class="preview-content" id="previewContent"></div>
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" onclick="closePreview()">
+          <i class="fas fa-times"></i>
+          Close
+        </button>
+        <button type="button" class="btn-primary" onclick="printForm()">
+          <i class="fas fa-print"></i>
+          Print
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Configuration -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+
+  <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyABrKEsHES3slgR8040ZAMa3_8tYeGf4uM",
+      authDomain: "pregnacare-f3c44.firebaseapp.com",
+      databaseURL: "https://pregnacare-f3c44-default-rtdb.firebaseio.com",
+      projectId: "pregnacare-f3c44",
+      storageBucket: "pregnacare-f3c44.firebasestorage.app",
+      messagingSenderId: "981150593337",
+      appId: "1:981150593337:web:4ae9b3215529ee340ff8e8"
+    };
+
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    const database = firebase.database();
+
+    // Initialize form
+    window.addEventListener('DOMContentLoaded', function() {
+      const now = new Date();
+      document.getElementById('referralDate').value = now.toISOString().split('T')[0];
+      document.getElementById('referralTime').value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+      document.getElementById('signatureDate').textContent = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      loadDraft();
+    });
+
+    // Auto-calculate EDC and gestational age
+    document.getElementById('lmp').addEventListener('change', function() {
+      const lmpDate = new Date(this.value);
+      if (!isNaN(lmpDate.getTime())) {
+        const edcDate = new Date(lmpDate);
+        edcDate.setDate(edcDate.getDate() + 280);
+        document.getElementById('edc').value = edcDate.toISOString().split('T')[0];
+        
+        const today = new Date();
+        const weeks = Math.floor((today - lmpDate) / (7 * 24 * 60 * 60 * 1000));
+        if (weeks >= 0 && weeks <= 42) {
+          document.getElementById('ageOfGestation').value = weeks;
+        }
+      }
+    });
+
+    // Auto-calculate age from DOB
+    document.getElementById('patientDOB').addEventListener('change', function() {
+      const dob = new Date(this.value);
+      if (!isNaN(dob.getTime())) {
+        let age = new Date().getFullYear() - dob.getFullYear();
+        const monthDiff = new Date().getMonth() - dob.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && new Date().getDate() < dob.getDate())) age--;
+        document.getElementById('patientAge').value = age;
+      }
+    });
+
+    // Blood pressure validation
+    document.getElementById('bp').addEventListener('blur', function() {
+      const bpPattern = /^\d{2,3}\/\d{2,3}$/;
+      if (this.value && !bpPattern.test(this.value)) {
+        alert('Please enter blood pressure in format: 120/80');
+        this.style.borderColor = 'var(--heart-red)';
+      } else {
+        this.style.borderColor = '';
+      }
+    });
+
+    // Temperature validation
+    document.getElementById('temperature').addEventListener('input', function() {
+      const temp = parseFloat(this.value);
+      if (temp < 36 || temp > 38) {
+        this.style.borderColor = 'var(--heart-red)';
+        this.style.backgroundColor = 'rgba(250, 49, 74, 0.05)';
+      } else {
+        this.style.borderColor = '';
+        this.style.backgroundColor = '';
+      }
+    });
+
+    // Urgency level styling
+    document.getElementById('urgencyLevel').addEventListener('change', function() {
+      this.style.fontWeight = '600';
+      const colors = { routine: '#10b981', urgent: '#f59e0b', emergency: 'var(--heart-red)' };
+      this.style.color = colors[this.value] || '';
+      this.style.borderColor = colors[this.value] || '';
+      this.style.backgroundColor = this.value === 'emergency' ? 'rgba(250, 49, 74, 0.05)' : '';
+    });
+
+    // Form submission
+    document.getElementById('referralForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      
+      const requiredFields = this.querySelectorAll('[required]');
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+        if (!field.value.trim()) {
+          isValid = false;
+          field.style.borderColor = 'var(--heart-red)';
+          field.style.animation = 'shake 0.3s';
+          setTimeout(() => field.style.animation = '', 300);
+        }
+      });
+      
+      if (!isValid) {
+        alert('Please fill in all required fields marked with *');
+        return;
+      }
+      
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+      const referralId = 'REF-' + Date.now();
+      data.referralId = referralId;
+      data.createdAt = new Date().toISOString();
+      data.status = 'pending';
+      
+      try {
+        await database.ref('referrals/' + referralId).set(data);
+        localStorage.removeItem('referralFormDraft');
+        showSuccessMessage(`Referral saved successfully! ID: ${referralId}`);
+        
+        setTimeout(() => {
+          if (confirm('Would you like to print the referral form now?')) {
+            printForm();
+          } else if (confirm('Would you like to create another referral?')) {
+            resetForm();
+          } else {
+            window.location.href = 'Dashboard.html';
+          }
+        }, 1500);
+      } catch (error) {
+        console.error('Error saving referral:', error);
+        alert('Error saving referral: ' + error.message);
+      }
+    });
+
+    function showSuccessMessage(message) {
+      const successMsg = document.getElementById('successMessage');
+      document.getElementById('successText').textContent = message;
+      successMsg.style.display = 'block';
+      setTimeout(() => successMsg.style.display = 'none', 5000);
+    }
+
+    function resetForm() {
+      if (confirm('Are you sure you want to clear all form data?')) {
+        document.getElementById('referralForm').reset();
+        const now = new Date();
+        document.getElementById('referralDate').value = now.toISOString().split('T')[0];
+        document.getElementById('referralTime').value = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        document.querySelectorAll('input, select, textarea').forEach(field => {
+          field.style.borderColor = '';
+          field.style.backgroundColor = '';
+          field.style.color = '';
+        });
+        localStorage.removeItem('referralFormDraft');
+      }
+    }
+
+    function previewForm() {
+      const formData = new FormData(document.getElementById('referralForm'));
+      const data = Object.fromEntries(formData.entries());
+      
+      let html = '<h3>Referral Information</h3>';
+      html += `<div class="preview-row"><div class="preview-label">Date:</div><div class="preview-value">${data.referralDate || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Time:</div><div class="preview-value">${data.referralTime || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Urgency:</div><div class="preview-value">${data.urgencyLevel || 'N/A'}</div></div>`;
+      
+      html += '<h3>Patient Information</h3>';
+      html += `<div class="preview-row"><div class="preview-label">Name:</div><div class="preview-value">${data.patientName || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Age:</div><div class="preview-value">${data.patientAge || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">DOB:</div><div class="preview-value">${data.patientDOB || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Civil Status:</div><div class="preview-value">${data.civilStatus || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Address:</div><div class="preview-value">${data.patientAddress || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Contact:</div><div class="preview-value">${data.contactNumber || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Emergency Contact:</div><div class="preview-value">${data.emergencyName || 'N/A'} - ${data.emergencyContact || 'N/A'}</div></div>`;
+      
+      html += '<h3>Obstetric Information</h3>';
+      html += `<div class="preview-row"><div class="preview-label">LMP:</div><div class="preview-value">${data.lmp || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">EDC:</div><div class="preview-value">${data.edc || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Gestation:</div><div class="preview-value">${data.ageOfGestation || 'N/A'} weeks</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">G-P-A:</div><div class="preview-value">${data.gravida || '0'}-${data.para || '0'}-${data.abortion || '0'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Blood Type:</div><div class="preview-value">${data.bloodType || 'N/A'} (${data.rhFactor || 'N/A'})</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Prenatal Visits:</div><div class="preview-value">${data.prenatalVisits || 'N/A'}</div></div>`;
+      
+      html += '<h3>Clinical Information</h3>';
+      html += `<div class="preview-row"><div class="preview-label">Reason:</div><div class="preview-value">${data.reasonForReferral || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Condition:</div><div class="preview-value">${data.presentCondition || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">BP:</div><div class="preview-value">${data.bp || 'N/A'} mmHg</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Temp:</div><div class="preview-value">${data.temperature || 'N/A'} °C</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Pulse:</div><div class="preview-value">${data.pulseRate || 'N/A'} bpm</div></div>`;
+      
+      html += '<h3>Referring to Hospital</h3>';
+      html += `<div class="preview-row"><div class="preview-label">Hospital:</div><div class="preview-value">${data.referralHospital || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Address:</div><div class="preview-value">${data.hospitalAddress || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Transport:</div><div class="preview-value">${data.transportMode || 'N/A'}</div></div>`;
+      
+      html += '<h3>Referring Physician</h3>';
+      html += `<div class="preview-row"><div class="preview-label">Physician:</div><div class="preview-value">${data.referringDoctor || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">License:</div><div class="preview-value">${data.doctorLicense || 'N/A'}</div></div>`;
+      html += `<div class="preview-row"><div class="preview-label">Contact:</div><div class="preview-value">${data.doctorContact || 'N/A'}</div></div>`;
+      
+      document.getElementById('previewContent').innerHTML = html;
+      document.getElementById('previewModal').style.display = 'block';
+    }
+
+    function closePreview() {
+      document.getElementById('previewModal').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      if (event.target === document.getElementById('previewModal')) {
+        closePreview();
+      }
+    }
+
+    function printForm() {
+      if (!document.getElementById('patientName').value) {
+        alert('Please fill in the form before printing.');
+        return;
+      }
+      
+      const actionButtons = document.querySelector('.form-actions');
+      const backButton = document.querySelector('.back-button');
+      const originalDisplay = actionButtons.style.display;
+      const originalBackDisplay = backButton.style.display;
+      
+      actionButtons.style.display = 'none';
+      backButton.style.display = 'none';
+      closePreview();
+      
+      window.print();
+      
+      actionButtons.style.display = originalDisplay;
+      backButton.style.display = originalBackDisplay;
+    }
+
+    // Auto-save draft
+    setInterval(() => {
+      const form = document.getElementById('referralForm');
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      if (data.patientName) {
+        localStorage.setItem('referralFormDraft', JSON.stringify(data));
+        console.log('Form auto-saved');
+      }
+    }, 60000);
+
+    function loadDraft() {
+      const draft = localStorage.getItem('referralFormDraft');
+      if (draft && confirm('A previous draft was found. Would you like to restore it?')) {
+        const data = JSON.parse(draft);
+        for (let key in data) {
+          const field = document.getElementById(key);
+          if (field) {
+            if (field.type === 'checkbox') {
+              field.checked = data[key] === 'on';
+            } else {
+              field.value = data[key];
+            }
+          }
+        }
+        showSuccessMessage('Draft restored successfully!');
+      } else if (draft) {
+        localStorage.removeItem('referralFormDraft');
+      }
+    }
+
+    // Warn before leaving
+    window.addEventListener('beforeunload', function(e) {
+      const form = document.getElementById('referralForm');
+      const formData = new FormData(form);
+      let hasData = false;
+      for (let [key, value] of formData.entries()) {
+        if (value && key !== 'referralDate' && key !== 'referralTime') {
+          hasData = true;
+          break;
+        }
+      }
+      if (hasData) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+  </script>
+</body>
+</html>

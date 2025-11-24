@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PregnaCare(Dashboard)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="Dashboard.css">
+  <link rel="icon" href="icons/love 1.png">
+</head>
+<body>
+  <!-- Sidebar Navigation -->
+  <div class="sidebar">
+    <div class="logo">
+      <div class="gradient-logo">
+        <img src="icons/mother.png" alt="PregnaCare Logo" />
+      </div>
+      <h2><span class="heart">Pregna</span><span class="care">Care</span></h2>
+      <p class="role">Maternity Clinic Admin</p>
+    </div>
+
+    <ul class="nav">
+      <li>
+        <a href="Dashboard.html" class="active">
+          <i class="fa-solid fa-chart-column"></i>
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a href="Patients.html">
+          <i class="fa-solid fa-circle-user"></i>
+          Patients
+        </a>
+      </li>
+      <li>
+        <a href="Appointments.html">
+          <i class="fa-solid fa-calendar-days"></i>
+          Appointments
+        </a>
+      </li>
+      <li>
+        <a href="Lab Results.html">
+          <i class="fa-solid fa-flask"></i>
+          Lab Results
+        </a>
+      </li>
+      <li>
+        <a href="Prescriptions.html">
+          <i class="fa-solid fa-pills"></i>
+          Prescriptions
+        </a>
+      </li>
+      <li>
+        <a href="Reports.html">
+          <i class="fa-solid fa-chart-bar"></i>
+          Reports
+        </a>
+      </li>
+    </ul>
+
+    <!-- User Profile Section with Dropdown -->
+    <div class="user" id="userProfileSection">
+      <div class="circle">P</div>
+      <div>
+        <p>Loading...</p>
+        <span>Admin</span>
+      </div>
+      
+      <div class="dropdown-menu">
+        <a href="#" class="logout" id="logoutBtn">
+          <i class="fas fa-sign-out-alt"></i>
+          Logout
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Area -->
+  <div class="main" id="mainContent">
+    <!-- Search Header with Auto-hide -->
+    <div class="search-header" id="searchHeader">
+      <div class="search">
+        <input type="text" placeholder="Search patients, appointments..." />
+        <div class="icons">
+          <i class="fa-solid fa-bell" id="notifIcon">
+            <span class="notification-badge">3</span>
+          </i>
+          <i class="fa-solid fa-circle-question" id="helpIcon"></i>
+        </div>
+
+        <!-- Notification Dropdown -->
+        <div class="dropdown" id="notifDropdown">
+          <div class="notif-header">
+            <p><strong>Notifications</strong></p>
+            <button onclick="markAllNotificationsRead()" class="mark-all-read-btn">
+              <i class="fas fa-check-double"></i>Mark all read
+            </button>
+          </div>
+        </div>
+
+        <!-- Help Dropdown -->
+        <div class="dropdown" id="helpDropdown">
+          <p><strong>Help & Support</strong></p>
+          <ul>
+            <li><i class="fas fa-phone"></i> Emergency: +63 917 123 4567</li>
+            <li><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b3c0c6c3c3dcc1c7f3c3c1d6d4ddd2d0d2c1d69dd0dcde">[email&#160;protected]</a></li>
+            <li><i class="fas fa-book"></i> User Manual</li>
+            <li><i class="fas fa-video"></i> Video Tutorials</li>
+            <li><i class="fas fa-comments"></i> Live Chat Support</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scrollProgressContainer">
+      <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content-area" id="contentArea">
+      <!-- Welcome Header -->
+      <div class="header-card">
+        <div class="header-text">
+          <h1>Welcome to <span class="heart">Pregna</span><span class="care">Care</span></h1>
+          <p class="subtitle"><strong>Gerola Simisim Maternity Clinic Management System</strong></p>
+          <small>Providing exceptional care for mothers and babies</small>
+        </div>
+        <div class="header-icon">
+          <i class="fa-solid fa-baby"></i>
+        </div>
+      </div>
+
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <div class="dashboard-top">
+          <div class="dashboard-text">
+            <h2>Dashboard</h2>
+            <p>Overview of clinic activities and patient statistics</p>
+          </div>
+          <div class="custom-dropdown">
+            <select id="timeFilter">
+              <option>Today</option>
+              <option>This Week</option>
+              <option selected>This Month</option>
+              <option>This Quarter</option>
+              <option>This Year</option>
+            </select>
+          </div>
+        </div>
+        <hr>
+      </div>
+
+      <!-- Dashboard Alerts Section -->
+      <div class="dashboard-alerts" id="dashboardAlerts" style="display: none;">
+        <div class="alerts-header">
+          <h3><i class="fas fa-exclamation-triangle"></i> Priority Alerts</h3>
+          <span class="alert-count">0</span>
+        </div>
+        <div class="alerts-list" id="alertsList"></div>
+      </div>
+
+      <!-- Statistics Cards -->
+      <div class="dashboard-cards">
+        <div class="card">
+          <i class="fas fa-user-plus card-icon"></i>
+          <div>New Patients</div>
+          <div class="card-number" id="todayCount">0</div>
+          <div class="card-trend trend-up">↗ Loading...</div>
+        </div>
+        <div class="card">
+          <i class="fas fa-calendar-check card-icon"></i>
+          <div>Appointments</div>
+          <div class="card-number" id="totalCount">0</div>
+          <div class="card-trend trend-up">↗ Loading...</div>
+        </div>
+        <div class="card" onclick="window.location.href='Referral Form.html'" style="cursor: pointer;">
+          <i class="fas fa-file-medical card-icon"></i>
+          <div>Referral</div>
+          <div class="card-number" id="referralCount">0</div>
+          <div class="card-trend" id="referralTrend">↗ Loading...</div>
+        </div>
+        <div class="card messages-card" onclick="window.location.href='Messages.html'" style="cursor: pointer;">
+          <i class="fas fa-envelope card-icon"></i>
+          <div>Messages</div>
+          <div class="card-number" id="messagesCount">0</div>
+          <div class="card-trend" id="messagesTrend">
+            <span id="unreadMessagesCount">0</span> unread
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity Cards -->
+      <div class="dashboard-lower-cards">
+        <div class="card">
+          <h3>Recent Patients</h3>
+          <div class="card-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <small>Last 5 patient records updated</small>
+              <a href="Patients.html" style="color: var(--heart-red); font-size: 13px; text-decoration: none;">View all patients →</a>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Status</th>
+                  <th>Last Visit</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="recentPatientsTable">
+                <tr>
+                  <td colspan="4" style="text-align: center; color: #888;">
+                    <i class="fas fa-spinner fa-spin"></i> Loading patients...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Today's Schedule</h3>
+          <div class="card-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+              <small><span data-current-date>Loading date...</span></small>
+              <a href="Appointments.html" style="color: var(--heart-red); font-size: 13px; text-decoration: none;">See All →</a>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Patient</th>
+                  <th>Type</th>
+                </tr>
+              </thead>
+              <tbody id="todaysScheduleTable">
+                <tr>
+                  <td colspan="3" style="text-align: center; color: #888;">
+                    <i class="fas fa-spinner fa-spin"></i> Loading appointments...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monthly Visits Analytics -->
+      <div class="visits">
+        <div class="chart-header">
+          <div>
+            <h3><i class="fas fa-chart-area" style="color: var(--heart-red); margin-right: 10px;"></i>Monthly Visits</h3>
+            <p>Patient visit trends over the last 6 months</p>
+          </div>
+          <div class="chart-controls">
+            <button class="chart-control-btn" onclick="refreshChart()" title="Refresh Chart">
+              <i class="fas fa-sync"></i> Refresh
+            </button>
+          </div>
+        </div>
+        
+        <div class="chart-container">
+          <canvas id="monthlyVisitsChart" width="400" height="200"></canvas>
+        </div>
+        
+        <div class="chart-stats-summary">
+          <div class="chart-stat">
+            <div class="chart-stat-value" id="totalVisitsCount">0</div>
+            <div class="chart-stat-label">Total Visits</div>
+          </div>
+          <div class="chart-stat">
+            <div class="chart-stat-value" id="avgVisitsCount">0</div>
+            <div class="chart-stat-label">Monthly Avg</div>
+          </div>
+          <div class="chart-stat">
+            <div class="chart-stat-value" id="completionRate">0%</div>
+            <div class="chart-stat-label">Completion Rate</div>
+          </div>
+          <div class="chart-stat">
+            <div class="chart-stat-value" id="peakMonth">-</div>
+            <div class="chart-stat-label">Peak Month</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Administrator Management Section -->
+      <div class="admin-quick-actions" id="adminSection" style="display: none;">
+        <div class="admin-panel">
+          <h3>
+            <i class="fas fa-user-shield"></i> Administrator Management
+          </h3>
+          <div class="admin-actions-grid">
+            <a href="Account.html" class="admin-action-card create-account">
+              <div class="admin-icon">
+                <i class="fas fa-user-plus"></i>
+              </div>
+              <div class="admin-info">
+                <h4>Create Admin Account</h4>
+                <small>Register new administrator users with customizable permissions and access levels</small>
+              </div>
+            </a>
+            <a href="Login History.html" class="admin-action-card login-history">
+              <div class="admin-icon">
+                <i class="fas fa-history"></i>
+              </div>
+              <div class="admin-info">
+                <h4>View Login History</h4>
+                <small>Monitor administrator activity logs, login attempts, and system access records</small>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Authentication Required Modal -->
+  <div class="modal" id="authRequiredModal" style="display: none;">
+    <div class="modal-content" style="max-width: 400px; text-align: center;">
+      <h2 style="color: var(--heart-red); margin-bottom: 20px;">
+        <i class="fas fa-lock"></i> Authentication Required
+      </h2>
+      <p style="margin-bottom: 20px;">You need to be logged in to access this page.</p>
+      <button onclick="window.location.href='Admin login.html'" style="background: linear-gradient(135deg, var(--heart-red), var(--deep-red)); color: white; padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+        <i class="fas fa-sign-in-alt"></i> Go to Login
+      </button>
+    </div>
+  </div>
+
+  <!-- Firebase Integration -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script src="Dashboard.js" defer></script>
+</body>
+</html>

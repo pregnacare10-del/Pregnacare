@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PregnaCare(Privacy Policy)</title>
+  <link rel="icon" href="icons/love 1.png">
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    /* PregnaCare Privacy Policy Page Styles */
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #fdc5ce 0%, #fabdcc 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: #fcaeae;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(231, 29, 29, 0.15);
+      text-align: center;
+      margin-bottom: 30px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .logo {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    .header h1 {
+      color: #df3c44;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin: 0 0 10px 0;
+    }
+
+    .header p {
+      color: #030303;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    .content-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 2.5rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(231, 29, 29, 0.1);
+      margin-bottom: 20px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, #f05d7d, #d42c42);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(240, 93, 125, 0.3);
+    }
+
+    .back-button:hover {
+      background: linear-gradient(135deg, #d42c42, #b91e2e);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(240, 93, 125, 0.4);
+    }
+
+    .section {
+      margin-bottom: 2.5rem;
+    }
+
+    .section h2 {
+      color: #df3c44;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #f05d7d;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section h3 {
+      color: #281e80;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 1.5rem 0 0.8rem 0;
+    }
+
+    .section p {
+      color: #333;
+      margin-bottom: 1rem;
+      text-align: justify;
+    }
+
+    .section ul {
+      margin-left: 20px;
+      margin-bottom: 1rem;
+    }
+
+    .section li {
+      color: #333;
+      margin-bottom: 0.5rem;
+      padding-left: 5px;
+    }
+
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(240, 93, 125, 0.1), rgba(212, 44, 66, 0.1));
+      padding: 1.5rem;
+      border-radius: 10px;
+      border-left: 4px solid #f05d7d;
+      margin: 1.5rem 0;
+    }
+
+    .highlight-box p {
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .contact-info {
+      background: rgba(105, 94, 252, 0.1);
+      padding: 1.5rem;
+      border-radius: 10px;
+      border-left: 4px solid #695efc;
+      margin: 1.5rem 0;
+    }
+
+    .contact-info h4 {
+      color: #281e80;
+      margin: 0 0 1rem 0;
+      font-size: 1.1rem;
+    }
+
+    .contact-info p {
+      margin: 0.5rem 0;
+      color: #333;
+    }
+
+    .last-updated {
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e1e1e1;
+    }
+
+    .table-of-contents {
+      background: rgba(105, 94, 252, 0.05);
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(105, 94, 252, 0.2);
+    }
+
+    .table-of-contents h3 {
+      color: #281e80;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+
+    .table-of-contents ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .table-of-contents li {
+      margin-bottom: 0.5rem;
+    }
+
+    .table-of-contents a {
+      color: #402de6;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .table-of-contents a:hover {
+      color: #281e80;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .header {
+        padding: 1.5rem;
+      }
+      
+      .header h1 {
+        font-size: 2rem;
+      }
+      
+      .content-box {
+        padding: 1.5rem;
+      }
+      
+      .section h2 {
+        font-size: 1.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="mother.png" alt="PregnaCare Logo" class="logo" />
+      <h1>Privacy Policy</h1>
+      <p>Your privacy is important to us. Learn how we protect your information.</p>
+    </div>
+
+    <a href="Account.html" class="back-button">
+      <i class="fas fa-arrow-left"></i>
+      Back to Registration
+    </a>
+
+    <div class="content-box">
+      <div class="table-of-contents">
+        <h3><i class="fas fa-list"></i> Table of Contents</h3>
+        <ul>
+          <li><a href="#introduction">1. Introduction</a></li>
+          <li><a href="#information-collection">2. Information We Collect</a></li>
+          <li><a href="#information-usage">3. How We Use Your Information</a></li>
+          <li><a href="#information-sharing">4. Information Sharing</a></li>
+          <li><a href="#data-security">5. Data Security</a></li>
+          <li><a href="#user-rights">6. Your Rights</a></li>
+          <li><a href="#cookies">7. Cookies and Tracking</a></li>
+          <li><a href="#children-privacy">8. Children's Privacy</a></li>
+          <li><a href="#policy-changes">9. Policy Changes</a></li>
+          <li><a href="#contact-us">10. Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="section" id="introduction">
+        <h2><i class="fas fa-shield-alt"></i> Introduction</h2>
+        <p>
+          Welcome to PregnaCare. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our pregnancy care management services. Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site or use our services.
+        </p>
+        <div class="highlight-box">
+          <p>
+            <strong>Important:</strong> PregnaCare is committed to protecting your personal health information and maintaining the highest standards of privacy and security in accordance with healthcare regulations and best practices.
+          </p>
+        </div>
+      </div>
+
+      <div class="section" id="information-collection">
+        <h2><i class="fas fa-database"></i> Information We Collect</h2>
+        
+        <h3>Personal Information</h3>
+        <p>We may collect the following types of personal information:</p>
+        <ul>
+          <li><strong>Contact Information:</strong> Name, email address, phone number, mailing address</li>
+          <li><strong>Account Information:</strong> Username, password, admin verification codes</li>
+          <li><strong>Health Information:</strong> Pregnancy-related data, medical history, appointment details</li>
+          <li><strong>Demographic Information:</strong> Age, date of birth, emergency contact information</li>
+          <li><strong>Communication Data:</strong> Messages, feedback, support requests</li>
+        </ul>
+
+        <h3>Automatically Collected Information</h3>
+        <p>We automatically collect certain information when you use our services:</p>
+        <ul>
+          <li>Device information (device type, operating system, browser type)</li>
+          <li>Usage data (pages visited, time spent, features used)</li>
+          <li>IP address and general location information</li>
+          <li>Log files and analytics data</li>
+        </ul>
+      </div>
+
+      <div class="section" id="information-usage">
+        <h2><i class="fas fa-cogs"></i> How We Use Your Information</h2>
+        <p>We use the collected information for the following purposes:</p>
+        <ul>
+          <li><strong>Service Delivery:</strong> Provide pregnancy care management services and features</li>
+          <li><strong>Account Management:</strong> Create and manage user accounts, authenticate users</li>
+          <li><strong>Communication:</strong> Send important updates, notifications, and support responses</li>
+          <li><strong>Personalization:</strong> Customize your experience based on your preferences</li>
+          <li><strong>Analytics:</strong> Improve our services through usage analysis and performance monitoring</li>
+          <li><strong>Legal Compliance:</strong> Comply with applicable laws and regulations</li>
+          <li><strong>Security:</strong> Protect against fraud, unauthorized access, and security threats</li>
+        </ul>
+      </div>
+
+      <div class="section" id="information-sharing">
+        <h2><i class="fas fa-share-alt"></i> Information Sharing</h2>
+        <p>We do not sell, trade, or otherwise transfer your personal information to third parties except in the following circumstances:</p>
+        
+        <h3>Authorized Disclosures</h3>
+        <ul>
+          <li><strong>Healthcare Providers:</strong> With your consent, we may share information with your healthcare team</li>
+          <li><strong>Service Providers:</strong> Trusted third-party services that help us operate our platform</li>
+          <li><strong>Legal Requirements:</strong> When required by law, court order, or government regulations</li>
+          <li><strong>Emergency Situations:</strong> To protect health and safety in urgent medical situations</li>
+          <li><strong>Business Transfers:</strong> In connection with mergers, acquisitions, or asset sales (with continued privacy protection)</li>
+        </ul>
+
+        <div class="highlight-box">
+          <p>
+            <strong>HIPAA Compliance:</strong> All health information sharing complies with HIPAA regulations and requires appropriate safeguards and authorizations.
+          </p>
+        </div>
+      </div>
+
+      <div class="section" id="data-security">
+        <h2><i class="fas fa-lock"></i> Data Security</h2>
+        <p>We implement comprehensive security measures to protect your information:</p>
+        
+        <h3>Technical Safeguards</h3>
+        <ul>
+          <li>End-to-end encryption for sensitive data transmission</li>
+          <li>Secure database storage with encryption at rest</li>
+          <li>Multi-factor authentication for admin accounts</li>
+          <li>Regular security audits and penetration testing</li>
+          <li>Automated backup and disaster recovery systems</li>
+        </ul>
+
+        <h3>Administrative Safeguards</h3>
+        <ul>
+          <li>Access controls and role-based permissions</li>
+          <li>Employee training on privacy and security protocols</li>
+          <li>Regular review and update of security policies</li>
+          <li>Incident response and breach notification procedures</li>
+        </ul>
+      </div>
+
+      <div class="section" id="user-rights">
+        <h2><i class="fas fa-user-shield"></i> Your Rights</h2>
+        <p>You have the following rights regarding your personal information:</p>
+        <ul>
+          <li><strong>Access:</strong> Request a copy of your personal information</li>
+          <li><strong>Correction:</strong> Update or correct inaccurate information</li>
+          <li><strong>Deletion:</strong> Request deletion of your personal information (subject to legal requirements)</li>
+          <li><strong>Portability:</strong> Receive your data in a structured, machine-readable format</li>
+          <li><strong>Restriction:</strong> Limit how we process your information</li>
+          <li><strong>Objection:</strong> Object to certain types of processing</li>
+          <li><strong>Consent Withdrawal:</strong> Withdraw consent for optional data processing</li>
+        </ul>
+
+        <div class="highlight-box">
+          <p>
+            <strong>How to Exercise Your Rights:</strong> Contact us using the information provided in the "Contact Us" section below. We will respond to your request within 30 days.
+          </p>
+        </div>
+      </div>
+
+      <div class="section" id="cookies">
+        <h2><i class="fas fa-cookie-bite"></i> Cookies and Tracking</h2>
+        <p>We use cookies and similar technologies to enhance your experience:</p>
+        
+        <h3>Types of Cookies We Use</h3>
+        <ul>
+          <li><strong>Essential Cookies:</strong> Required for basic site functionality</li>
+          <li><strong>Performance Cookies:</strong> Help us understand how you use our site</li>
+          <li><strong>Functional Cookies:</strong> Remember your preferences and settings</li>
+          <li><strong>Analytics Cookies:</strong> Provide insights for service improvement</li>
+        </ul>
+
+        <p>You can control cookie settings through your browser preferences. Disabling certain cookies may affect site functionality.</p>
+      </div>
+
+      <div class="section" id="children-privacy">
+        <h2><i class="fas fa-baby"></i> Children's Privacy</h2>
+        <p>
+          PregnaCare is designed for use by adults (18 years and older) or pregnant minors with parental consent. We do not knowingly collect personal information from children under 13. If we become aware of such collection, we will take steps to delete the information promptly.
+        </p>
+      </div>
+
+      <div class="section" id="policy-changes">
+        <h2><i class="fas fa-edit"></i> Policy Changes</h2>
+        <p>
+          We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. We will notify you of significant changes by:
+        </p>
+        <ul>
+          <li>Posting the updated policy on our website</li>
+          <li>Sending email notifications for material changes</li>
+          <li>Displaying prominent notices within our application</li>
+        </ul>
+        <p>Continued use of our services after policy changes constitutes acceptance of the updated terms.</p>
+      </div>
+
+      <div class="section" id="contact-us">
+        <h2><i class="fas fa-envelope"></i> Contact Us</h2>
+        <p>If you have questions or concerns about this Privacy Policy or our privacy practices, please contact us:</p>
+        
+        <div class="contact-info">
+          <h4>PregnaCare Privacy Office</h4>
+          <p><i class="fas fa-envelope"></i> Email: privacy@pregnacare.com</p>
+          <p><i class="fas fa-phone"></i> Phone: +1 (555) 123-4567</p>
+          <p><i class="fas fa-map-marker-alt"></i> Address: 123 Healthcare Drive, Medical Center, MC 12345</p>
+          <p><i class="fas fa-clock"></i> Response Time: We respond to privacy inquiries within 48 hours</p>
+        </div>
+
+        <div class="highlight-box">
+          <p>
+            <strong>Data Protection Officer:</strong> For EU residents, you may also contact our Data Protection Officer at dpo@pregnacare.com for matters related to GDPR compliance.
+          </p>
+        </div>
+      </div>
+
+      <div class="last-updated">
+        <p><strong>Last Updated:</strong> June 22, 2025</p>
+        <p>This Privacy Policy is effective as of the date listed above and supersedes all previous versions.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Smooth scrolling for table of contents links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Highlight current section in table of contents
+    function highlightCurrentSection() {
+      const sections = document.querySelectorAll('.section');
+      const tocLinks = document.querySelectorAll('.table-of-contents a');
+      
+      let currentSection = null;
+      const scrollPosition = window.scrollY + 100;
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          currentSection = section;
+        }
+      });
+
+      tocLinks.forEach(link => {
+        link.style.fontWeight = '500';
+        link.style.color = '#402de6';
+      });
+
+      if (currentSection) {
+        const currentLink = document.querySelector(`a[href="#${currentSection.id}"]`);
+        if (currentLink) {
+          currentLink.style.fontWeight = '700';
+          currentLink.style.color = '#281e80';
+        }
+      }
+    }
+
+    window.addEventListener('scroll', highlightCurrentSection);
+    window.addEventListener('load', highlightCurrentSection);
+  </script>
+</body>
+</html>

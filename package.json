@@ -1,0 +1,18 @@
+{
+  "name": "pregnacare-f3c44",
+  "version": "1.0.0",
+  "main": "Dashboard.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@dataconnect/generated": "file:src/dataconnect-generated",
+    "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
+    "express": "^5.1.0",
+    "firebase": "^11.10.0"
+  }
+}

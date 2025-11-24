@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "224541492144",
+    "firebase_url": "https://pregnacare-b4fe1-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "pregnacare-b4fe1",
+    "storage_bucket": "pregnacare-b4fe1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224541492144:android:b4544c0caa588dbbdf4c75",
+        "android_client_info": {
+          "package_name": "com.example.pregnacare_system"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0mHNyv-QYlOaUy_HjLBD3eoWAFQnakVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PregnaCare(Admin Login)</title>
+  <link rel="icon" href="icons/love 1.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="stylesheet" href="Admin login.css" />
+  <link rel="preconnect" href="google-services.json" />
+</head>
+<body>
+  <div class="container">
+    <div class="form-box">
+      <img src="icons/mother.png" alt="PregnaCare Logo" class="logo" />
+      <h3>PregnaCare Admin Portal</h3>
+      <p>Secure access for healthcare administrators</p>
+
+      <div class="success-message" id="successMessage"></div>
+      <div class="error-message" id="errorMessage"></div>
+
+      <!-- Login Tab -->
+      <div id="loginTab" class="tab-content active">
+        <form id="loginForm">
+          <label for="loginEmail">Email address</label>
+          <div class="input-group">
+            <input 
+              type="email" 
+              id="loginEmail" 
+              name="email" 
+              required 
+              placeholder="Enter your email address"
+              autocomplete="email"
+            />
+          </div>
+
+          <label for="loginPassword">Password</label>
+          <div class="input-group">
+            <input 
+              type="password" 
+              id="loginPassword" 
+              name="password" 
+              required 
+              placeholder="Enter your password"
+              autocomplete="current-password"
+            />
+            <i class="fas fa-eye password-toggle" id="loginPasswordToggle"></i>
+          </div>
+          <button type="submit" id="loginBtn">Sign In</button>
+          <div class="options">
+            <a href="Password.html">Forgot password?</a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <script src="Admin login.js"></script>
+</body>
+</html>

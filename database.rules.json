@@ -1,0 +1,870 @@
+{
+  "rules": {
+    "adminUsers": {
+      ".read": "auth != null",
+      ".write": true,
+      ".indexOn": ["email", "role", "isActive", "createdAt", "lastLogin", "phoneVerified"],
+      "$uid": {
+        ".validate": "newData.hasChildren(['fullName', 'email', 'phone', 'role']) && newData.child('fullName').isString() && newData.child('fullName').val().length >= 2 && newData.child('email').isString() && newData.child('email').val().matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/) && newData.child('phone').isString() && newData.child('phone').val().matches(/^\\+[1-9]\\d{10,14}$/) && newData.child('role').val() === 'Admin'",
+        "fullName": {
+          ".validate": "newData.isString() && newData.val().length >= 2 && newData.val().length <= 100"
+        },
+        "email": {
+          ".validate": "newData.isString() && newData.val().matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/)"
+        },
+        "phone": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\+[1-9]\\d{10,14}$/)"
+        },
+        "phoneVerified": {
+          ".validate": "newData.isBoolean()"
+        },
+        "role": {
+          ".validate": "newData.isString() && newData.val() === 'Admin'"
+        },
+        "isActive": {
+          ".validate": "newData.isBoolean()"
+        },
+        "emailVerified": {
+          ".validate": "newData.isBoolean()"
+        },
+        "profileComplete": {
+          ".validate": "newData.isBoolean()"
+        },
+        "createdAt": {
+          ".validate": "newData.isString()"
+        },
+        "createdTimestamp": {
+          ".validate": "newData.isNumber()"
+        },
+        "lastLogin": {
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "uid": {
+          ".validate": "newData.isString() && newData.val() === $uid"
+        },
+        "permissions": {
+          ".validate": "newData.hasChildren()",
+          "canManageUsers": {
+            ".validate": "newData.isBoolean()"
+          },
+          "canGenerateReports": {
+            ".validate": "newData.isBoolean()"
+          },
+          "canManagePatients": {
+            ".validate": "newData.isBoolean()"
+          },
+          "canManageAppointments": {
+            ".validate": "newData.isBoolean()"
+          },
+          "canViewAnalytics": {
+            ".validate": "newData.isBoolean()"
+          }
+        },
+        "loginHistory": {
+          ".validate": "newData.hasChildren()",
+          "$loginKey": {
+            ".validate": "newData.hasChildren(['timestamp', 'ipAddress']) && newData.child('timestamp').isNumber() && newData.child('ipAddress').isString()",
+            "timestamp": {
+              ".validate": "newData.isNumber()"
+            },
+            "ipAddress": {
+              ".validate": "newData.isString()"
+            },
+            "userAgent": {
+              ".validate": "newData.isString()"
+            },
+            "success": {
+              ".validate": "newData.isBoolean()"
+            }
+          }
+        }
+      }
+    },
+    
+    "patients": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["patientId", "status", "fullName", "dueDate", "pregnancyWeek", "lastVisit", "createdAt"],
+      "$patientKey": {
+        "patientId": {
+          ".validate": "newData.isString() && newData.val().matches(/^PT\\d{3}$/) || !newData.exists()"
+        },
+        "email": {
+          ".validate": "newData.isString() && newData.val().matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/) || !newData.exists()"
+        },
+        "firstName": {
+          ".validate": "newData.isString() && newData.val().length >= 2 && newData.val().length <= 50 || !newData.exists()"
+        },
+        "lastName": {
+          ".validate": "newData.isString() && newData.val().length >= 2 && newData.val().length <= 50 || !newData.exists()"
+        },
+        "middleName": {
+          ".validate": "newData.isString() && newData.val().length <= 50 || !newData.exists()"
+        },
+        "fullName": {
+          ".validate": "newData.isString() && newData.val().length >= 5 && newData.val().length <= 150 || !newData.exists()"
+        },
+        "password": {
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "birthdate": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}$/) || !newData.exists()"
+        },
+        "status": {
+          ".validate": "newData.isString() && (newData.val() === 'active' || newData.val() === 'Ongoing' || newData.val() === 'Completed' || newData.val() === 'high-risk' || newData.val() === 'inactive') || !newData.exists()"
+        },
+        "pregnancyWeek": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 42 || !newData.exists()"
+        },
+        "age": {
+          ".validate": "newData.isNumber() && newData.val() >= 10 && newData.val() <= 60 || !newData.exists()"
+        },
+        "dueDate": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}$/) || !newData.exists()"
+        },
+        "phone": {
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "lastVisit": {
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "appointmentCount": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 || !newData.exists()"
+        },
+        "labResultCount": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 || !newData.exists()"
+        },
+        "activeMedicationCount": {
+          ".validate": "newData.isNumber() && newData.val() >= 0 || !newData.exists()"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber() || newData.isString() || !newData.exists()"
+        },
+        "updatedAt": {
+          ".validate": "newData.isNumber() || !newData.exists()"
+        },
+        "registrationDate": {
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "autoUpdated": {
+          ".validate": "newData.isBoolean() || !newData.exists()"
+        },
+        "isDemo": {
+          ".validate": "newData.isBoolean() || !newData.exists()"
+        },
+        "isLocal": {
+          ".validate": "newData.isBoolean() || !newData.exists()"
+        }
+      }
+    },
+
+    "Patient Id Recovery Request": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["firstName", "lastName", "gmail", "status", "submittedAt"]
+    },
+    
+    "appointments": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["name", "provider", "status", "time", "endTime", "purpose", "createdAt", "updatedAt"],
+      "$appointmentKey": {
+        ".validate": "newData.hasChildren(['name', 'time', 'purpose', 'provider']) && newData.child('name').isString() && newData.child('name').val().length >= 2 && newData.child('time').isString() && newData.child('purpose').isString() && newData.child('provider').isString()",
+        "name": {
+          ".validate": "newData.isString() && newData.val().length >= 2 && newData.val().length <= 100"
+        },
+        "time": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$/)"
+        },
+        "endTime": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$/) || !newData.exists()"
+        },
+        "purpose": {
+          ".validate": "newData.isString() && newData.val().length >= 1 && (newData.val() === 'Prenatal Checkup' || newData.val() === 'Routine Monitoring' || newData.val() === 'Postpartum Checkup' || newData.val() === 'Blood Test' || newData.val() === 'Ultrasound' || newData.val() === 'Glucose Screening' || newData.val() === 'Genetic Screening' || newData.val() === 'Anatomy Scan' || newData.val() === 'High-Risk Consultation' || newData.val() === 'Nutrition Counseling' || newData.val() === 'Emergency Visit')"
+        },
+        "provider": {
+          ".validate": "newData.isString() && newData.val().length >= 1 && (newData.val() === 'Dr. Gerola Simisim' || newData.val() === 'Nurse Unknown' || newData.val().length >= 2)"
+        },
+        "status": {
+          ".validate": "newData.isString() && (newData.val() === 'Walk-in' || newData.val() === 'Online Appointment' || newData.val() === 'Scheduled' || newData.val() === 'Completed' || newData.val() === 'Done' || newData.val() === 'Finished' || newData.val() === 'Cancelled' || newData.val() === 'Canceled' || newData.val() === 'No Show' || newData.val() === 'No-show' || newData.val() === 'Archived')"
+        },
+        "createdAt": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$/)"
+        },
+        "updatedAt": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$/)"
+        },
+        "isLocal": {
+          ".validate": "newData.isBoolean() || !newData.exists()"
+        },
+        "patientId": {
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "patientKey": {
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "age": {
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "dueDate": {
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "phone": {
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "email": {
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "notes": {
+          ".validate": "newData.isString() && newData.val().length <= 1000 || !newData.exists()"
+        },
+        "duration": {
+          ".validate": "newData.isNumber() && newData.val() >= 15 && newData.val() <= 480 || !newData.exists()"
+        },
+        "reminderSent": {
+          ".validate": "newData.isBoolean() || !newData.exists()"
+        },
+        "followUpRequired": {
+          ".validate": "newData.isBoolean() || !newData.exists()"
+        },
+        "priority": {
+          ".validate": "newData.isString() && (newData.val() === 'normal' || newData.val() === 'high' || newData.val() === 'urgent') || !newData.exists()"
+        },
+        "roomNumber": {
+          ".validate": "newData.isString() && newData.val().length <= 20 || !newData.exists()"
+        },
+        "appointmentType": {
+          ".validate": "newData.isString() && (newData.val() === 'routine' || newData.val() === 'follow-up' || newData.val() === 'emergency' || newData.val() === 'consultation') || !newData.exists()"
+        },
+        "cancellationReason": {
+          ".validate": "newData.isString() && newData.val().length <= 500 || !newData.exists()"
+        },
+        "rescheduledFrom": {
+          ".validate": "newData.isString() || !newData.exists()"
+        },
+        "insuranceVerified": {
+          ".validate": "newData.isBoolean() || !newData.exists()"
+        },
+        "checkInTime": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$/) || !newData.exists()"
+        },
+        "checkOutTime": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(\\.\\d{3})?Z?$/) || !newData.exists()"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    },
+    
+    "labResults": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["patientId", "patientName", "status", "date", "test", "requiresAction"],
+      "$labResultKey": {
+        ".validate": "newData.hasChildren(['patientId', 'test']) && newData.child('patientId').isString() && newData.child('test').isString()",
+        "patientId": {
+          ".validate": "newData.isString() && newData.val().length >= 2"
+        },
+        "patientName": {
+          ".validate": "newData.isString()"
+        },
+        "test": {
+          ".validate": "newData.isString() && newData.val().length >= 2"
+        },
+        "status": {
+          ".validate": "newData.isString() && (newData.val() === 'normal' || newData.val() === 'abnormal' || newData.val() === 'pending' || newData.val() === 'critical')"
+        },
+        "date": {
+          ".validate": "newData.isString()"
+        },
+        "requiresAction": {
+          ".validate": "newData.isBoolean()"
+        },
+        "value": {
+          ".validate": "newData.isString() || newData.isNumber()"
+        },
+        "unit": {
+          ".validate": "newData.isString()"
+        },
+        "normalRange": {
+          ".validate": "newData.isString()"
+        },
+        "testCategory": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+    
+    "medications": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["patientId", "patientName", "status", "medicationName", "startDate", "priority"],
+      "$medicationKey": {
+        ".validate": "newData.hasChildren(['patientId', 'medicationName']) && newData.child('patientId').isString() && newData.child('medicationName').isString()",
+        "patientId": {
+          ".validate": "newData.isString() && newData.val().length >= 2"
+        },
+        "patientName": {
+          ".validate": "newData.isString()"
+        },
+        "medicationName": {
+          ".validate": "newData.isString() && newData.val().length >= 2"
+        },
+        "status": {
+          ".validate": "newData.isString() && (newData.val() === 'active' || newData.val() === 'completed' || newData.val() === 'discontinued' || newData.val() === 'paused')"
+        },
+        "startDate": {
+          ".validate": "newData.isString()"
+        },
+        "duration": {
+          ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 365"
+        },
+        "refillReminder": {
+          ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 30"
+        },
+        "priority": {
+          ".validate": "newData.isString() && (newData.val() === 'normal' || newData.val() === 'high' || newData.val() === 'critical')"
+        },
+        "dosage": {
+          ".validate": "newData.isString()"
+        },
+        "frequency": {
+          ".validate": "newData.isString()"
+        },
+        "prescribedBy": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+    
+    "reports": {
+      ".read": true,
+      ".write": "auth != null && (auth.token.role === 'admin' || auth.token.role === 'doctor' || auth.token.role === 'nurse')",
+      ".indexOn": ["reportType", "dateGenerated", "generatedBy", "module", "status", "priority", "timeRange"],
+      "$reportKey": {
+        ".validate": "newData.hasChildren(['reportType', 'title', 'dateGenerated', 'generatedBy']) && newData.child('reportType').val().matches(/^(daily|weekly|monthly|quarterly|yearly|custom|patient-summary|appointment-summary|lab-summary|medication-summary|analytics|dashboard)$/) && newData.child('title').isString() && newData.child('title').val().length >= 3 && newData.child('dateGenerated').isString() && newData.child('generatedBy').isString()",
+        "reportType": {
+          ".validate": "newData.isString() && newData.val().matches(/^(daily|weekly|monthly|quarterly|yearly|custom|patient-summary|appointment-summary|lab-summary|medication-summary|analytics|dashboard)$/)"
+        },
+        "title": {
+          ".validate": "newData.isString() && newData.val().length >= 3 && newData.val().length <= 100"
+        },
+        "description": {
+          ".validate": "newData.isString() && newData.val().length <= 500"
+        },
+        "dateGenerated": {
+          ".validate": "newData.isString()"
+        },
+        "timeRange": {
+          ".validate": "newData.hasChildren(['startDate', 'endDate']) && newData.child('startDate').isString() && newData.child('endDate').isString()"
+        },
+        "generatedBy": {
+          ".validate": "newData.isString() && newData.val().length >= 2"
+        },
+        "generatedByUserId": {
+          ".validate": "newData.isString()"
+        },
+        "module": {
+          ".validate": "newData.isString() && newData.val().matches(/^(patients|appointments|medications|labResults|analytics|dashboard|all)$/)"
+        },
+        "status": {
+          ".validate": "newData.isString() && newData.val().matches(/^(generating|completed|failed|archived)$/)"
+        },
+        "priority": {
+          ".validate": "newData.isString() && newData.val().matches(/^(low|normal|high|urgent)$/)"
+        },
+        "dataSourceFilters": {
+          ".validate": "newData.hasChildren()",
+          "includePatients": {
+            ".validate": "newData.isBoolean()"
+          },
+          "includeAppointments": {
+            ".validate": "newData.isBoolean()"
+          },
+          "includeLabs": {
+            ".validate": "newData.isBoolean()"
+          },
+          "includeMedications": {
+            ".validate": "newData.isBoolean()"
+          },
+          "patientStatus": {
+            ".validate": "newData.isString() && newData.val().matches(/^(all|active|ongoing|completed|high-risk|inactive)$/)"
+          },
+          "appointmentStatus": {
+            ".validate": "newData.isString() && newData.val().matches(/^(all|scheduled|completed|cancelled|ongoing)$/)"
+          },
+          "labStatus": {
+            ".validate": "newData.isString() && newData.val().matches(/^(all|normal|abnormal|pending|critical)$/)"
+          },
+          "medicationStatus": {
+            ".validate": "newData.isString() && newData.val().matches(/^(all|active|completed|discontinued|paused)$/)"
+          }
+        },
+        "statistics": {
+          ".validate": "newData.hasChildren()",
+          "totalPatients": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "totalAppointments": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "totalLabResults": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "totalMedications": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "abnormalLabResults": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "urgentAppointments": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "highRiskPatients": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "activeMedications": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "completedAppointments": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "pendingLabResults": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          }
+        },
+        "chartData": {
+          ".validate": "newData.hasChildren()",
+          "patientStatusDistribution": {
+            ".validate": "newData.hasChildren()"
+          },
+          "appointmentTrends": {
+            ".validate": "newData.hasChildren()"
+          },
+          "labResultTrends": {
+            ".validate": "newData.hasChildren()"
+          },
+          "monthlyActivity": {
+            ".validate": "newData.hasChildren()"
+          }
+        },
+        "exportFormats": {
+          ".validate": "newData.hasChildren()",
+          "pdf": {
+            ".validate": "newData.isBoolean()"
+          },
+          "excel": {
+            ".validate": "newData.isBoolean()"
+          },
+          "csv": {
+            ".validate": "newData.isBoolean()"
+          }
+        },
+        "accessLog": {
+          ".validate": "newData.hasChildren()",
+          "$logEntry": {
+            ".validate": "newData.hasChildren(['timestamp', 'userId', 'action']) && newData.child('timestamp').isNumber() && newData.child('userId').isString() && newData.child('action').val().matches(/^(generated|viewed|exported|archived|deleted)$/)"
+          }
+        },
+        "fileSize": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "processingTime": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "dataPoints": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "version": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d+\\.\\d+\\.\\d+$/)"
+        },
+        "isScheduled": {
+          ".validate": "newData.isBoolean()"
+        },
+        "scheduleSettings": {
+          ".validate": "newData.hasChildren()",
+          "frequency": {
+            ".validate": "newData.isString() && newData.val().matches(/^(daily|weekly|monthly|quarterly|yearly)$/)"
+          },
+          "nextRun": {
+            ".validate": "newData.isString()"
+          },
+          "enabled": {
+            ".validate": "newData.isBoolean()"
+          },
+          "emailRecipients": {
+            ".validate": "newData.isString()"
+          }
+        },
+        "metadata": {
+          ".validate": "newData.hasChildren()",
+          "tags": {
+            ".validate": "newData.isString()"
+          },
+          "category": {
+            ".validate": "newData.isString() && newData.val().matches(/^(clinical|administrative|financial|operational|analytics)$/)"
+          },
+          "confidentialityLevel": {
+            ".validate": "newData.isString() && newData.val().matches(/^(public|internal|confidential|restricted)$/)"
+          },
+          "retentionPeriod": {
+            ".validate": "newData.isNumber() && newData.val() >= 30 && newData.val() <= 2555"
+          }
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "updatedAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "lastAccessed": {
+          ".validate": "newData.isNumber()"
+        },
+        "accessCount": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "isArchived": {
+          ".validate": "newData.isBoolean()"
+        },
+        "archivedAt": {
+          ".validate": "newData.isNumber()"
+        }
+      }
+    },
+    
+    "reportTemplates": {
+      ".read": true,
+      ".write": "auth != null && (auth.token.role === 'admin' || auth.token.role === 'doctor')",
+      ".indexOn": ["templateType", "createdBy", "isDefault", "isActive", "category"],
+      "$templateKey": {
+        ".validate": "newData.hasChildren(['templateName', 'templateType', 'createdBy']) && newData.child('templateName').isString() && newData.child('templateName').val().length >= 3 && newData.child('templateType').val().matches(/^(patient-summary|appointment-summary|lab-summary|medication-summary|analytics|custom)$/) && newData.child('createdBy').isString()",
+        "templateName": {
+          ".validate": "newData.isString() && newData.val().length >= 3 && newData.val().length <= 100"
+        },
+        "templateType": {
+          ".validate": "newData.isString() && newData.val().matches(/^(patient-summary|appointment-summary|lab-summary|medication-summary|analytics|custom)$/)"
+        },
+        "description": {
+          ".validate": "newData.isString() && newData.val().length <= 500"
+        },
+        "createdBy": {
+          ".validate": "newData.isString()"
+        },
+        "createdByUserId": {
+          ".validate": "newData.isString()"
+        },
+        "isDefault": {
+          ".validate": "newData.isBoolean()"
+        },
+        "isActive": {
+          ".validate": "newData.isBoolean()"
+        },
+        "category": {
+          ".validate": "newData.isString() && newData.val().matches(/^(clinical|administrative|financial|operational|analytics)$/)"
+        },
+        "configuration": {
+          ".validate": "newData.hasChildren()",
+          "includedSections": {
+            ".validate": "newData.hasChildren()",
+            "patientInfo": {
+              ".validate": "newData.isBoolean()"
+            },
+            "appointmentHistory": {
+              ".validate": "newData.isBoolean()"
+            },
+            "labResults": {
+              ".validate": "newData.isBoolean()"
+            },
+            "medications": {
+              ".validate": "newData.isBoolean()"
+            },
+            "charts": {
+              ".validate": "newData.isBoolean()"
+            },
+            "statistics": {
+              ".validate": "newData.isBoolean()"
+            }
+          },
+          "chartTypes": {
+            ".validate": "newData.hasChildren()",
+            "patientStatus": {
+              ".validate": "newData.isBoolean()"
+            },
+            "appointmentTrends": {
+              ".validate": "newData.isBoolean()"
+            },
+            "labTrends": {
+              ".validate": "newData.isBoolean()"
+            },
+            "monthlyActivity": {
+              ".validate": "newData.isBoolean()"
+            }
+          },
+          "filterOptions": {
+            ".validate": "newData.hasChildren()",
+            "defaultTimeRange": {
+              ".validate": "newData.isString() && newData.val().matches(/^(7days|1month|3months|6months|1year|custom)$/)"
+            },
+            "defaultStatus": {
+              ".validate": "newData.isString()"
+            }
+          }
+        },
+        "usageCount": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "lastUsed": {
+          ".validate": "newData.isNumber()"
+        },
+        "version": {
+          ".validate": "newData.isString() && newData.val().matches(/^\\d+\\.\\d+$/)"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "updatedAt": {
+          ".validate": "newData.isNumber()"
+        }
+      }
+    },
+    
+    "reportSchedules": {
+      ".read": true,
+      ".write": "auth != null && (auth.token.role === 'admin' || auth.token.role === 'doctor')",
+      ".indexOn": ["frequency", "nextRun", "isActive", "createdBy", "reportType"],
+      "$scheduleKey": {
+        ".validate": "newData.hasChildren(['scheduleName', 'reportType', 'frequency', 'createdBy']) && newData.child('scheduleName').isString() && newData.child('scheduleName').val().length >= 3 && newData.child('reportType').isString() && newData.child('frequency').val().matches(/^(daily|weekly|monthly|quarterly|yearly)$/) && newData.child('createdBy').isString()",
+        "scheduleName": {
+          ".validate": "newData.isString() && newData.val().length >= 3 && newData.val().length <= 100"
+        },
+        "reportType": {
+          ".validate": "newData.isString() && newData.val().matches(/^(daily|weekly|monthly|quarterly|yearly|custom|patient-summary|appointment-summary|lab-summary|medication-summary|analytics|dashboard)$/)"
+        },
+        "frequency": {
+          ".validate": "newData.isString() && newData.val().matches(/^(daily|weekly|monthly|quarterly|yearly)$/)"
+        },
+        "schedule": {
+          ".validate": "newData.hasChildren()",
+          "time": {
+            ".validate": "newData.isString() && newData.val().matches(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/)"
+          },
+          "dayOfWeek": {
+            ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 6"
+          },
+          "dayOfMonth": {
+            ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 31"
+          },
+          "timezone": {
+            ".validate": "newData.isString()"
+          }
+        },
+        "recipients": {
+          ".validate": "newData.hasChildren()",
+          "emails": {
+            ".validate": "newData.isString()"
+          },
+          "userIds": {
+            ".validate": "newData.isString()"
+          }
+        },
+        "configuration": {
+          ".validate": "newData.hasChildren()",
+          "templateId": {
+            ".validate": "newData.isString()"
+          },
+          "exportFormat": {
+            ".validate": "newData.isString() && newData.val().matches(/^(pdf|excel|csv|all)$/)"
+          },
+          "includeCharts": {
+            ".validate": "newData.isBoolean()"
+          },
+          "autoArchive": {
+            ".validate": "newData.isBoolean()"
+          }
+        },
+        "isActive": {
+          ".validate": "newData.isBoolean()"
+        },
+        "nextRun": {
+          ".validate": "newData.isNumber()"
+        },
+        "lastRun": {
+          ".validate": "newData.isNumber()"
+        },
+        "lastRunStatus": {
+          ".validate": "newData.isString() && newData.val().matches(/^(success|failed|partial|cancelled)$/)"
+        },
+        "runCount": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "createdBy": {
+          ".validate": "newData.isString()"
+        },
+        "createdByUserId": {
+          ".validate": "newData.isString()"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "updatedAt": {
+          ".validate": "newData.isNumber()"
+        }
+      }
+    },
+    
+    "reportAnalytics": {
+      ".read": true,
+      ".write": "auth != null",
+      ".indexOn": ["date", "reportType", "module", "action", "userId"],
+      "$analyticsKey": {
+        ".validate": "newData.hasChildren(['date', 'action', 'module']) && newData.child('date').isString() && newData.child('action').val().matches(/^(generated|viewed|exported|shared|deleted|archived)$/) && newData.child('module').val().matches(/^(reports|templates|schedules|analytics)$/)",
+        "date": {
+          ".validate": "newData.isString()"
+        },
+        "timestamp": {
+          ".validate": "newData.isNumber()"
+        },
+        "action": {
+          ".validate": "newData.isString() && newData.val().matches(/^(generated|viewed|exported|shared|deleted|archived)$/)"
+        },
+        "module": {
+          ".validate": "newData.isString() && newData.val().matches(/^(reports|templates|schedules|analytics)$/)"
+        },
+        "reportType": {
+          ".validate": "newData.isString()"
+        },
+        "reportId": {
+          ".validate": "newData.isString()"
+        },
+        "userId": {
+          ".validate": "newData.isString()"
+        },
+        "userRole": {
+          ".validate": "newData.isString() && newData.val().matches(/^(admin|doctor|nurse|staff)$/)"
+        },
+        "exportFormat": {
+          ".validate": "newData.isString() && newData.val().matches(/^(pdf|excel|csv|view)$/)"
+        },
+        "processingTime": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "dataPoints": {
+          ".validate": "newData.isNumber() && newData.val() >= 0"
+        },
+        "success": {
+          ".validate": "newData.isBoolean()"
+        },
+        "errorMessage": {
+          ".validate": "newData.isString()"
+        },
+        "sessionId": {
+          ".validate": "newData.isString()"
+        },
+        "ipAddress": {
+          ".validate": "newData.isString()"
+        },
+        "userAgent": {
+          ".validate": "newData.isString()"
+        }
+      }
+    },
+    
+    "notifications": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["category", "priority", "timestamp", "read", "userId", "type"],
+      "$notificationKey": {
+        ".validate": "newData.hasChildren(['title', 'message', 'type', 'category', 'timestamp']) && newData.child('title').isString() && newData.child('title').val().length >= 1 && newData.child('message').isString() && newData.child('message').val().length >= 1 && newData.child('type').val().matches(/^(info|success|warning|error)$/) && newData.child('category').val().matches(/^(patients|appointments|medications|labResults|system|dashboard|reports)$/) && newData.child('timestamp').isNumber()"
+      }
+    },
+    
+    "systemLogs": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["module", "timestamp", "level", "userId", "action"],
+      "$logKey": {
+        ".validate": "newData.hasChildren(['module', 'level', 'message', 'timestamp']) && newData.child('module').val().matches(/^(patients|appointments|medications|labResults|notifications|auth|system|dashboard|reports)$/) && newData.child('level').val().matches(/^(info|warn|error|debug)$/) && newData.child('message').isString() && newData.child('timestamp').isNumber()"
+      }
+    },
+    
+    "users": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["role", "email", "lastLogin", "active", "uid"],
+      "$userId": {
+        ".validate": "newData.hasChildren(['displayName', 'email', 'role']) && newData.child('displayName').isString() && newData.child('email').isString() && newData.child('email').val().matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/) && newData.child('role').val().matches(/^(admin|doctor|nurse|staff)$/)",
+        "lastLogin": {
+          ".validate": "newData.isNumber()"
+        },
+        "active": {
+          ".validate": "newData.isBoolean()"
+        },
+        "uid": {
+          ".validate": "newData.isString()"
+        },
+        "reportPermissions": {
+          ".validate": "newData.hasChildren()",
+          "canGenerate": {
+            ".validate": "newData.isBoolean()"
+          },
+          "canExport": {
+            ".validate": "newData.isBoolean()"
+          },
+          "canSchedule": {
+            ".validate": "newData.isBoolean()"
+          },
+          "canViewAnalytics": {
+            ".validate": "newData.isBoolean()"
+          },
+          "allowedReportTypes": {
+            ".validate": "newData.isString()"
+          }
+        }
+      }
+    },
+    
+    "analytics": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["date", "module", "metric", "timestamp"],
+      "$analyticsKey": {
+        ".validate": "newData.hasChildren(['date', 'module', 'metric', 'value']) && newData.child('date').isString() && newData.child('module').isString() && newData.child('metric').isString() && (newData.child('value').isNumber() || newData.child('value').isString())"
+      }
+    },
+    
+    "settings": {
+      ".read": true,
+      ".write": true,
+      "$settingCategory": {
+        ".validate": "newData.isString() || newData.isNumber() || newData.isBoolean() || newData.hasChildren()"
+      }
+    },
+    
+    "messages": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["senderRole", "timestamp", "read", "recipientId", "category"],
+      "$messageKey": {
+        ".validate": "newData.hasChildren(['senderName', 'senderRole', 'content', 'timestamp']) && newData.child('senderName').isString() && newData.child('senderRole').val().matches(/^(doctor|nurse|patient|admin|system)$/) && newData.child('content').isString() && newData.child('content').val().length >= 1 && newData.child('timestamp').isNumber()"
+      }
+    },
+    
+    "backups": {
+      ".read": true,
+      ".write": true,
+      ".indexOn": ["timestamp", "module", "status", "date"],
+      "$backupKey": {
+        ".validate": "newData.hasChildren(['module', 'timestamp', 'status']) && newData.child('module').isString() && newData.child('timestamp').isNumber() && newData.child('status').val().matches(/^(success|failed|pending|in-progress)$/)"
+      }
+    },
+    
+    "system": {
+      ".read": true,
+      ".write": true,
+      "lastUsedPatientCounter": {
+        ".validate": "newData.isNumber() && newData.val() >= 0"
+      }
+    }
+  }
+}

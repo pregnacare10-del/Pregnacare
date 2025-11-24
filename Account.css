@@ -1,0 +1,673 @@
+/* PregnaCare Sub-Admin Registration Complete Styles - No Admin Verification */
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #fdd1d8 0%, #f7c1ce 100%);
+    min-height: 100vh;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Form Box */
+.form-box {
+    background: #fdabab;
+    padding: 2.5rem;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(231, 29, 29, 0.15);
+    text-align: center;
+    max-width: 520px;
+    width: 100%;
+    position: relative;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+/* Logo */
+.logo {
+    width: 65px;
+    height: 60px;
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(250, 121, 121);
+    aspect-ratio: 1.1;
+    --_m: radial-gradient(#eca6a6 69%, #f8434300 70%) 84.5%/50%;
+    -webkit-mask-box-image: var(--_m);
+    mask-border: var(--_m);
+    clip-path: polygon(-41% 0, 50% 91%, 141% 0);
+}
+
+.logo img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+/* Typography */
+h3 {
+    margin: 10px 0;
+    color: #df3c44;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+p {
+    color: #030303;
+    font-size: 0.9rem;
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+/* Progress Container */
+.progress-container {
+    margin-bottom: 25px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6b8a, #695efc);
+    width: 0%;
+    transition: width 0.4s ease;
+    border-radius: 3px;
+}
+
+.progress-text {
+    font-size: 0.85rem;
+    color: #333;
+    font-weight: 500;
+    display: block;
+}
+
+/* Form Styles */
+.registration-form {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 22px;
+    position: relative;
+    clear: both;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #281e80;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.required {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.optional {
+    color: #666;
+    font-weight: normal;
+    font-style: italic;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 0;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+/* Input Styles */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e1e1e1;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.95);
+    font-family: inherit;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Password fields need special padding for toggle button */
+input[type="password"] {
+    padding-right: 55px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #695efc;
+    box-shadow: inset 0 0 0 1px #695efc;
+    background: #ffffff;
+    transform: none;
+}
+
+input.valid {
+    border-color: #28a745;
+    background: rgba(40, 167, 69, 0.05);
+}
+
+input.invalid {
+    border-color: #dc3545;
+    background: rgba(220, 53, 69, 0.05);
+}
+
+/* Password fields with validation status */
+input[type="password"].valid {
+    padding-right: 85px;
+}
+
+input[type="password"].invalid {
+    padding-right: 85px;
+}
+
+/* Non-password fields with validation status */
+input[type="text"].valid,
+input[type="email"].valid,
+input[type="tel"].valid {
+    padding-right: 45px;
+}
+
+input[type="text"].invalid,
+input[type="email"].invalid,
+input[type="tel"].invalid {
+    padding-right: 45px;
+}
+
+/* Select Styles */
+select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e1e1e1;
+    border-radius: 10px;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.95);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    font-family: inherit;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 18px;
+    box-sizing: border-box;
+}
+
+select:focus {
+    outline: none;
+    border-color: #695efc;
+    box-shadow: inset 0 0 0 1px #695efc;
+    background-color: #ffffff;
+    transform: none;
+}
+
+select.valid {
+    border-color: #28a745;
+    background-color: rgba(40, 167, 69, 0.05);
+    padding-right: 70px;
+}
+
+select.invalid {
+    border-color: #dc3545;
+    background-color: rgba(220, 53, 69, 0.05);
+    padding-right: 70px;
+}
+
+/* Password Toggle */
+.password-toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #666;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 4px;
+    z-index: 10;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.password-toggle:hover {
+    color: #333;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.password-toggle:focus {
+    outline: 2px solid #695efc;
+    outline-offset: 2px;
+}
+
+/* Field Status */
+.field-status {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 5;
+    width: 20px;
+    text-align: center;
+}
+
+.field-status.valid {
+    color: #28a745;
+}
+
+.field-status.invalid {
+    color: #dc3545;
+}
+
+/* Adjust field status for password fields with toggle */
+.input-group:has(.password-toggle) .field-status {
+    right: 50px;
+}
+
+/* Adjust field status for select elements */
+select + .field-status {
+    right: 45px;
+}
+
+/* Password Requirements */
+.password-requirements {
+    font-size: 11px;
+    color: #666;
+    margin-top: 10px;
+    padding: 12px 14px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    border-left: 3px solid #ddd;
+    line-height: 1.4;
+    transition: all 0.3s ease;
+    clear: both;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.password-requirements.valid {
+    color: #28a745;
+    background: rgba(40, 167, 69, 0.1);
+    border-left-color: #28a745;
+}
+
+.password-requirements.invalid {
+    color: #dc3545;
+    background: rgba(220, 53, 69, 0.1);
+    border-left-color: #dc3545;
+}
+
+/* Help Text */
+.help-text {
+    font-size: 11px;
+    color: #666;
+    margin-top: 8px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 8px;
+    line-height: 1.4;
+    clear: both;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.admin-level-help {
+    background: rgba(105, 94, 252, 0.1);
+    border-left: 3px solid #695efc;
+    color: #333;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+/* Checkbox Container */
+.checkbox-container {
+    display: flex;
+    align-items: flex-start;
+    text-align: left;
+    margin: 25px 0;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    clear: both;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.checkbox-container input[type="checkbox"] {
+    margin-right: 12px;
+    margin-top: 3px;
+    transform: scale(1.3);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.checkbox-container label {
+    font-size: 12px;
+    margin-bottom: 0;
+    line-height: 1.5;
+    cursor: pointer;
+    flex: 1;
+}
+
+.checkbox-container a {
+    color: #695efc;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.checkbox-container a:hover {
+    text-decoration: underline;
+}
+
+/* Button Styles */
+.button-group {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    clear: both;
+    width: 100%;
+}
+
+button {
+    width: 100%;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #f05d7d, #d42c42);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(240, 93, 125, 0.4);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #d42c42, #b91e2e);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(240, 93, 125, 0.5);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+}
+
+.btn-secondary:hover {
+    background: #545b62;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
+button:disabled {
+    background: #ccc !important;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 0.7;
+}
+
+/* Loading Animation */
+.loading {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 8px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Messages */
+.error-message,
+.success-message {
+    padding: 14px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    line-height: 1.5;
+    display: none;
+    clear: both;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    border-left: 4px solid #dc3545;
+}
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    border-left: 4px solid #28a745;
+}
+
+/* Loading Overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    backdrop-filter: blur(4px);
+}
+
+.loading-content {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #695efc;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+.loading-content p {
+    color: #666;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Form States */
+.form-box.form-success {
+    border: 2px solid #28a745;
+    box-shadow: 0 0 20px rgba(40, 167, 69, 0.3);
+    animation: successPulse 1s ease-in-out;
+}
+
+@keyframes successPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+/* Input Animations */
+.input-group {
+    transition: transform 0.2s ease;
+}
+
+.input-group:focus-within {
+    transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .form-box {
+        padding: 2rem 1.5rem;
+        margin: 10px;
+        max-width: none;
+    }
+    
+    h3 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-box {
+        padding: 1.5rem 1rem;
+    }
+    
+    .help-text,
+    .password-requirements {
+        font-size: 10px;
+        padding: 8px 10px;
+    }
+    
+    input,
+    select,
+    button {
+        padding: 12px 14px;
+        font-size: 13px;
+    }
+    
+    .progress-container {
+        padding: 12px;
+    }
+    
+    .button-group {
+        margin-top: 25px;
+        gap: 10px;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #695efc;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5a4fcf;
+}
+
+/* Focus Styles for Accessibility */
+*:focus {
+    outline: 2px solid #695efc;
+    outline-offset: 2px;
+}
+
+input:focus,
+select:focus,
+button:focus {
+    outline: none;
+}
+
+/* Print Styles */
+@media print {
+    .loading-overlay {
+        display: none !important;
+    }
+    
+    body {
+        background: white !important;
+    }
+    
+    .form-box {
+        background: white !important;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+    }
+}
